@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Quiz App</title>
+    <link rel="stylesheet" href="/CSS/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <div class="auth-container">
+        <div class="logo">
+            <i class="fas fa-brain"></i>
+            <span>QuizWiz</span>
+        </div>
+        
+        <h1>Create Your Account</h1>
+        <p class="subtitle">Join our community of quiz enthusiasts</p>
+        
+        <form id="signupForm">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Enter your Email" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Enter your Name" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Enter your Password" required id="password">
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Confirm your Password" required id="confirmPassword">
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+            
+            <div class="password-strength">
+                <div class="strength-meter"></div>
+                <span class="strength-text">Password Strength: <span>Weak</span></span>
+            </div>
+            
+            <button type="submit" class="signup-btn">
+                <span>Create Account</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>or sign up with</span>
+        </div>
+        
+        <div class="social-login">
+            <button class="google-btn">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+            <button class="github-btn">
+                <i class="fab fa-github"></i>
+                GitHub
+            </button>
+        </div>
+        
+        <p class="login-link">Already have an account? <a href="/HTML/login.html">Login</a></p>
+    </div>
+
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="/scripts/auth.js"></script>
+</body>
+</html>

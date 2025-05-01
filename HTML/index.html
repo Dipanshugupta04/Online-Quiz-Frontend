@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizWiz - Interactive Quiz Platform</title>
+    <link rel="stylesheet" href="/CSS/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-glass">
+        <div class="logo">
+            <i class="fas fa-brain"></i>
+            <span>QuizWiz</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-cogs"></i> Service</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact us</a></li>
+            <li><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <button class="login-btn pulse-on-hover"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
+            <button class="signup-btn pulse-on-hover"><i class="fas fa-user-plus"></i> SIGN UP</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="gradient-text">Joining as a participant?</h1>
+            <div class="quiz-code-input">
+                <input type="text" placeholder="#Enter Code Here" id="quizCode">
+                <button id="joinQuizBtn" class="glow-on-hover"><i class="fas fa-arrow-right"></i> Join Quiz</button>
+            </div>
+            <p class="hero-subtext">The easiest way to create and participate in quizzes</p>
+            <p class="hero-subtext">Engage your audience with live interactive quizzes</p>
+            <a href="/HTML/signup.html" class="cta-btn shine-effect">
+                <span>Get Started</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="hero-illustration">
+            <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Quiz illustration">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <h2 class="section-title">Transform Your Experience With Our Platform</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>Instant quiz creation and real-time participation</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users feature-icon"></i>
+                    <h3>Engage Audiences</h3>
+                    <p>Interactive features to keep participants involved</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h3>Detailed Analytics</h3>
+                    <p>Track performance and participant progress</p>
+                </div>
+            </div>
+            <button class="try-btn floating">
+                <span>Try It Now</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
