@@ -3,41 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Quiz</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
+    <title>Create Quiz | QuizMaster Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/create-quiz.css">
 </head>
 <body>
-    <nav>
-        <div class="logo">LOGO</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Service</a></li>
-            <li><a href="#">My Quiz</a></li>
-        </ul>
-        <div class="user">Welcome User Name</div>
+    <div class="background-animation">
+        <div class="shape-circle"></div>
+        <div class="shape-blur"></div>
+        <div class="shape-dots"></div>
+    </div>
+    
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>QuizMaster Pro</span>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                <li><a href="#"><i class="fas fa-cogs"></i> <span>Service</span></a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> <span>My Quiz</span></a></li>
+            </ul>
+            <div class="user-profile">
+                <div class="avatar-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=random" alt="User" class="user-avatar">
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Welcome, User</span>
+                    <span class="user-role">Creator</span>
+                </div>
+            </div>
+        </div>
     </nav>
+
     <div class="container">
-        <div class="quiz-form">
-            <h2>Question</h2>
-            <input type="text" placeholder="Enter your Question" required>
-            <h3>Options</h3>
-            <input type="text" placeholder="Option 1" required>
-            <input type="text" placeholder="Option 2" required>
-            <input type="text" placeholder="Option 3" required>
-            <input type="text" placeholder="Option 4" required>
-            <div class="buttons">
-                <button id="addQuestion">Add More Question</button>
-                <button id="submitQuiz">Submit</button>
+        <div class="quiz-card glass-card">
+            <div class="quiz-header">
+                <div class="header-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <h1>Create New Quiz</h1>
+                <p class="quiz-instructions">Build your perfect quiz by adding questions and marking the correct answers</p>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="progress-step active">1. Questions</div>
+                <div class="progress-step">2. Settings</div>
+                <div class="progress-step">3. Review</div>
+                <div class="progress-step">4. Publish</div>
+            </div>
+            
+            <form class="quiz-form" id="quizForm">
+                <div class="question-group" id="questionContainer">
+                    <!-- Questions will be added here dynamically -->
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="addQuestion" class="btn btn-secondary">
+                        <i class="fas fa-plus"></i> Add Another Question
+                    </button>
+                    <div class="action-group">
+                        <button type="button" id="saveDraft" class="btn btn-outline">
+                            <i class="fas fa-save"></i> Save Draft
+                        </button>
+                        <button type="submit" id="submitQuiz" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Quiz
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="quizPopup" class="popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <div class="success-animation">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <h2>Quiz Submitted Successfully!</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="popup-body">
+                <p>Your quiz has been published and is now available to participants.</p>
+                <div class="success-details">
+                    <div class="detail-item">
+                        <i class="fas fa-link"></i>
+                        <span id="quizLink">quizmaster.pro/your-quiz</span>
+                        <button class="copy-link"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button class="btn btn-outline" id="viewQuiz">
+                    <i class="fas fa-eye"></i> View Quiz
+                </button>
+                <button class="btn btn-primary" id="closePopup">
+                    <i class="fas fa-check"></i> Done
+                </button>
             </div>
         </div>
     </div>
-    <!-- Popup for Quiz Submission -->
-    <div id="quizPopup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <p>Your Quiz is Submitted</p>
-        </div>
-    </div>
-    <script src="scripts/quiz.js"></script>
+
+    <script src="/JS/create-quiz.js"></script>
 </body>
 </html>
