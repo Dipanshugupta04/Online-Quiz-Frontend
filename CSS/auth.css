@@ -26,11 +26,20 @@ body {
   min-height: 100vh;
   color: var(--dark);
   position: relative;
-  padding: 2rem 0; /* Added padding for better spacing */
+  padding: 2rem 0;
 }
 
 /* ===== ANIMATED BACKGROUND ===== */
-.background-shapes {
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.blob-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -40,14 +49,14 @@ body {
   overflow: hidden;
 }
 
-.shape {
+.blob {
   position: absolute;
   border-radius: 50%;
   opacity: 0.1;
   animation: float 15s infinite linear;
 }
 
-.shape:nth-child(1) {
+.blob:nth-child(1) {
   width: 300px;
   height: 300px;
   background: var(--accent);
@@ -56,31 +65,13 @@ body {
   animation-duration: 20s;
 }
 
-.shape:nth-child(2) {
+.blob:nth-child(2) {
   width: 200px;
   height: 200px;
   background: var(--success);
   top: 60%;
   left: 70%;
   animation-duration: 25s;
-}
-
-.shape:nth-child(3) {
-  width: 150px;
-  height: 150px;
-  background: var(--warning);
-  top: 30%;
-  left: 50%;
-  animation-duration: 15s;
-}
-
-.shape:nth-child(4) {
-  width: 100px;
-  height: 100px;
-  background: var(--danger);
-  top: 80%;
-  left: 30%;
-  animation-duration: 30s;
 }
 
 @keyframes float {
@@ -109,7 +100,7 @@ body {
   z-index: 1;
   transform: scale(0.98);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  margin: 0 auto; /* Center the container */
+  margin: 0 auto;
 }
 
 .auth-container:hover {
@@ -251,6 +242,37 @@ body {
 
 .strength-text span {
   font-weight: 500;
+}
+
+.match-status {
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* ===== PASSWORD REQUIREMENTS ===== */
+.password-requirements {
+  margin: 10px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.password-requirements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.password-requirements li {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.password-requirements li.requirement-met {
+  color: var(--success);
 }
 
 /* ===== OPTIONS ===== */
@@ -453,6 +475,20 @@ body {
 
 .signup-link a:hover::after, .login-link a:hover::after {
   width: 100%;
+}
+
+/* ===== ERROR MESSAGES ===== */
+.error-message {
+  color: var(--danger);
+  margin-top: 10px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

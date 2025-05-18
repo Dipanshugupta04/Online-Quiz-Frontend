@@ -22,24 +22,25 @@
         <form id="signupForm">
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
-                <input type="email" placeholder="Enter your Email" required>
+                <input type="email" name="email" id="email" placeholder="Enter your Email" required>
             </div>
             
             <div class="input-group">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Enter your Name" required>
+                <input type="text" name="name" id="name" placeholder="Enter your Name" required>
             </div>
             
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Enter your Password" required id="password">
+                <input type="password" name="password" placeholder="Enter your Password" required id="password">
                 <i class="fas fa-eye toggle-password"></i>
             </div>
             
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Confirm your Password" required id="confirmPassword">
+                <input type="password" name="confirmPassword" placeholder="Confirm your Password" required id="confirmPassword">
                 <i class="fas fa-eye toggle-password"></i>
+                <span class="match-status"></span>
             </div>
             
             <div class="password-strength">
@@ -47,8 +48,18 @@
                 <span class="strength-text">Password Strength: <span>Weak</span></span>
             </div>
             
+            <div class="password-requirements">
+                <ul>
+                    <li id="req-length">✗ At least 8 characters</li>
+                    <li id="req-upper">✗ At least one uppercase letter</li>
+                    <li id="req-lower">✗ At least one lowercase letter</li>
+                    <li id="req-number">✗ At least one number</li>
+                    <li id="req-special">✗ At least one special character</li>
+                </ul>
+            </div>
+            
             <button type="submit" class="signup-btn">
-                <span><a href="/HTML/dashboard.html" style="text-decoration: none;"> Account </a></span>
+                <span>Create Account</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </form>
@@ -58,21 +69,21 @@
         </div>
         
         <div class="social-login">
-            <button class="google-btn">
+            <button type="button" class="google-btn">
                 <i class="fab fa-google"></i>
                 Google
             </button>
-            <button class="github-btn">
+            <button type="button" class="github-btn">
                 <i class="fab fa-github"></i>
                 GitHub
             </button>
         </div>
         
-        <p class="login-link">Already have an account? <a href="/HTML/login.html">Login</a></p>
+        <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
     </div>
 
     <!-- Particles.js for background animation -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="/scripts/auth.js"></script>
+    <script src="/JS/auth.js"></script>
 </body>
 </html>
