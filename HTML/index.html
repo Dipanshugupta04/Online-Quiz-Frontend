@@ -32,18 +32,32 @@
                 <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
                 <li><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
             </ul>
-            <div class="auth-buttons">
-                <a href="/HTML/login.html" class="auth-anchor"> 
+            <div class="user-section" id="userSection">
+                <div class="user-profile">
+                    <span id="navUsername"></span>
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="my-quizzes.html"><i class="fas fa-list"></i> My Quizzes</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="auth-buttons" id="authButtons">
+                <a href="login.html" class="auth-anchor"> 
                     <button class="login-btn pulse-on-hover">
                         <i class="fas fa-sign-in-alt"></i> LOGIN
                     </button>
                 </a>
-                <a href="/HTML/signup.html" class="auth-anchor"> 
+                <a href="signup.html" class="auth-anchor"> 
                     <button class="signup-btn pulse-on-hover">
                         <i class="fas fa-user-plus"></i> SIGN UP
                     </button>
                 </a>
             </div>
+           
         </div>
     </nav>
 
@@ -59,7 +73,7 @@
             </div>
             <p class="hero-subtext fade-slide">The easiest way to create and participate in quizzes</p>
             <p class="hero-subtext fade-slide">Engage your audience with live interactive quizzes</p>
-            <a href="/HTML/signup.html" class="cta-btn shine-effect">
+            <a href="#" class="cta-btn shine-effect">
                 <span>Get Started</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -191,6 +205,6 @@
         </div>
     </footer>
 
-    <script src="/js/script.js"></script>
+    <script src="/JS/script.js"></script>
 </body>
 </html>

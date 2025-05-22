@@ -309,6 +309,7 @@ if (document.getElementById('loginForm')) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
+                
             });
             
             const data = await response.json();
@@ -334,7 +335,7 @@ if (document.getElementById('loginForm')) {
             
             // Redirect after delay
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'index.html';
             }, 1500);
             
         } catch (error) {
@@ -358,6 +359,7 @@ if (document.getElementById('loginForm')) {
                 errorElement.remove();
             }, 5000);
         }
+        
     });
 
     // Check if there's a remembered email
