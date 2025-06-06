@@ -31,14 +31,17 @@
                 <li><a href="#"><i class="fas fa-cogs"></i> <span>Service</span></a></li>
                 <li><a href="#"><i class="fas fa-question-circle"></i> <span>My Quiz</span></a></li>
             </ul>
-            <div class="user-profile">
-                <div class="avatar-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=User+Name&background=random" alt="User" class="user-avatar">
-                    <div class="status-indicator"></div>
+            <div class="user-section" id="userSection">
+                <div class="user-profile">
+                    <span id="navUsername"></span>
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
                 </div>
-                <div class="user-details">
-                    <span class="user-name">Welcome, User</span>
-                    <span class="user-role">Creator</span>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="my-quizzes.html"><i class="fas fa-list"></i> My Quizzes</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
             </div>
         </div>
@@ -56,8 +59,8 @@
             
             <div class="progress-tracker">
                 <div class="progress-step active">1. Questions</div>
-                <div class="progress-step">2. Settings</div>
-                <div class="progress-step">3. Review</div>
+                <div class="progress-step">2. Review</div>
+                <div class="progress-step">3. Edit</div>
                 <div class="progress-step">4. Publish</div>
             </div>
             

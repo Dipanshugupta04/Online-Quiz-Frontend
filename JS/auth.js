@@ -407,7 +407,7 @@ function handleCredentialResponse(response) {
         if (data.jwt && data.user) {
             console.log("jwt"+data.jwt);
 
-            localStorage.setItem("jwt", data.jwt);
+            localStorage.setItem("authToken", data.jwt);
             localStorage.setItem("user", JSON.stringify({name: data.user }));
             console.log("Login successful! JWT and username saved to localStorage");
             alert("Login successful!");

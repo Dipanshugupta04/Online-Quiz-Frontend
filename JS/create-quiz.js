@@ -1,3 +1,36 @@
+ // --- User Dropdown Toggle ---
+ const userSection = document.getElementById('userSection');
+ const userDropdown = document.getElementById('userDropdown');
+
+ userSection?.addEventListener('click', function (e) {
+     e.stopPropagation();
+     userDropdown.classList.toggle('show');
+ });
+
+ document.addEventListener('click', function () {
+     userDropdown?.classList.remove('show');
+ });
+
+ // --- Display Username from localStorage ---
+ const userNameSpan = document.getElementById('navUsername');
+ const userData = localStorage.getItem('user');
+
+ if (userData) {
+     try {
+         const user = JSON.parse(userData);
+         const name = user.name || user.username || user.fullName || 'User';
+         userNameSpan.textContent = `Welcome, ${name}`;
+     } catch (error) {
+         console.error('Failed to parse user data:', error);
+         userNameSpan.textContent = 'Welcome';
+     }
+ } else {
+     userNameSpan.textContent = 'Welcome';
+ }
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const mobileMenu = document.getElementById('mobile-menu');
@@ -10,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize with one question
     addNewQuestion();
-    
+
     // Add question button
     const addQuestionBtn = document.getElementById('addQuestion');
     addQuestionBtn.addEventListener('click', addNewQuestion);
