@@ -1,89 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up | Quiz App</title>
-    <link rel="stylesheet" href="/CSS/auth.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/CSS/auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+     <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
     <div class="particles-container" id="particles-js"></div>
-    
-    <div class="auth-container">
-        <div class="logo">
-            <i class="fas fa-brain"></i>
-            <span>QuizWiz</span>
-        </div>
-        
-        <h1>Create Your Account</h1>
-        <p class="subtitle">Join our community of quiz enthusiasts</p>
-        
-        <form id="signupForm">
-            <div class="input-group">
-                <i class="fas fa-envelope"></i>
-                <input type="email" name="email" id="email" placeholder="Enter your Email" required>
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" name="name" id="name" placeholder="Enter your Name" required>
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="password" placeholder="Enter your Password" required id="password">
-                <i class="fas fa-eye toggle-password"></i>
-            </div>
-            
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" name="confirmPassword" placeholder="Confirm your Password" required id="confirmPassword">
-                <i class="fas fa-eye toggle-password"></i>
-                <span class="match-status"></span>
-            </div>
-            
-            <div class="password-strength">
-                <div class="strength-meter"></div>
-                <span class="strength-text">Password Strength: <span>Weak</span></span>
-            </div>
-            
-            <div class="password-requirements">
-                <ul>
-                    <li id="req-length">✗ At least 8 characters</li>
-                    <li id="req-upper">✗ At least one uppercase letter</li>
-                    <li id="req-lower">✗ At least one lowercase letter</li>
-                    <li id="req-number">✗ At least one number</li>
-                    <li id="req-special">✗ At least one special character</li>
-                </ul>
-            </div>
-            
-            <button type="submit" class="signup-btn">
-                <span>Create Account</span>
-                <i class="fas fa-arrow-right"></i>
-            </button>
-        </form>
-        
-        <div class="divider">
-            <span>or sign up with</span>
-        </div>
-        
-        <div class="social-login">
-            <button type="button" class="google-btn">
-                <i class="fab fa-google"></i>
-                Google
-            </button>
-            <button type="button" class="github-btn">
-                <i class="fab fa-github"></i>
-                GitHub
-            </button>
-        </div>
-        
-        <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
-    </div>
 
+    <div class="auth-container">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>QuizWiz</span>
+      </div>
+
+      <h1>Create Your Account</h1>
+      <p class="subtitle">Join our community of quiz enthusiasts</p>
+
+      <form id="signupForm">
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your Email"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your Name"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your Password"
+            required
+            id="password"
+          />
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm your Password"
+            required
+            id="confirmPassword"
+          />
+          <i class="fas fa-eye toggle-password"></i>
+          <span class="match-status"></span>
+        </div>
+
+        <div class="password-strength">
+          <div class="strength-meter"></div>
+          <span class="strength-text"
+            >Password Strength: <span>Weak</span></span
+          >
+        </div>
+
+        <div class="password-requirements">
+          <ul>
+            <li id="req-length">✗ At least 8 characters</li>
+            <li id="req-upper">✗ At least one uppercase letter</li>
+            <li id="req-lower">✗ At least one lowercase letter</li>
+            <li id="req-number">✗ At least one number</li>
+            <li id="req-special">✗ At least one special character</li>
+          </ul>
+        </div>
+
+        <button type="submit" class="signup-btn">
+          <span>Create Account</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>or sign up with</span>
+      </div>
+
+      <div class="social-login">
+        <div
+          id="g_id_onload"
+          data-client_id="693476049740-se2qqteroh0pk7etb58q18s467uggj1k.apps.googleusercontent.com"
+          data-callback="handleCredentialResponse"
+          data-auto_prompt="false"
+        ></div>
+        <div class="g_id_signin" data-type="standard"></div>
+        <button type="button" class="github-btn">
+          <i class="fab fa-github"></i>
+          GitHub
+        </button>
+      </div>
+
+      <p class="login-link">
+        Already have an account? <a href="login.html">Login</a>
+      </p>
+    </div>
+    <script>
+      function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        // Handle the Google Sign-In response as needed here
+      }
+    </script>
     <!-- Particles.js for background animation -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="/JS/auth.js"></script>
-</body>
+  </body>
 </html>

@@ -4,16 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const userSection = document.getElementById('userSection');
     const navUsername = document.getElementById('navUsername');
     const logoutBtn = document.getElementById('logoutBtn');
-
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
     // Check authentication status
     function checkAuthStatus() {
        
         const userData = localStorage.getItem('user');
         
+        
         if (userData) {
             try {
                 const user = JSON.parse(userData);
-                const name = user.name || user.username || user.fullName || 'User';
+                
+                const name = user.name || user.username || user.fullName ||user.user || 'User';
                 authButtons.style.display = 'none';
                 userSection.style.display = 'flex';
                 navUsername.textContent = `Welcome, ${name}`;
@@ -43,21 +46,28 @@ document.addEventListener('DOMContentLoaded', function() {
     checkAuthStatus();
 
     // Logout functionality
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('Are you sure you want to logout?')) {
-                // Show loading state
-                logoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging out...';
-                
-                // Clear data and redirect after short delay
-                setTimeout(() => {
-                    clearUserData();
-                    window.location.href = '/HTML/index.html';
-                }, 500);
-            }
-        });
+    function performLogout() {
+        localStorage.removeItem('authToken');
+       
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('user');
+        // Remove other keys if needed
+        window.location.href = '/HTML/index.html';
     }
+
+    logoutBtn?.addEventListener('click', function (e) {
+        e.preventDefault();
+        performLogout();
+    });
+    loginBtn?.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/HTML/login.html';
+    });
+    signupBtn?.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/HTML/signup.html';
+    });
+    
 
     // Mobile menu toggle
     const hamburger = document.getElementById('hamburger');
