@@ -1,329 +1,495 @@
- // --- User Dropdown Toggle ---
- const userSection = document.getElementById('userSection');
- const userDropdown = document.getElementById('userDropdown');
+// --- User Dropdown Toggle ---
+const userSection = document.getElementById("userSection");
+const userDropdown = document.getElementById("userDropdown");
 
- userSection?.addEventListener('click', function (e) {
-     e.stopPropagation();
-     userDropdown.classList.toggle('show');
- });
+userSection?.addEventListener("click", function (e) {
+  e.stopPropagation();
+  userDropdown.classList.toggle("show");
+});
 
- document.addEventListener('click', function () {
-     userDropdown?.classList.remove('show');
- });
+document.addEventListener("click", function () {
+  userDropdown?.classList.remove("show");
+});
 
- // --- Display Username from localStorage ---
- const userNameSpan = document.getElementById('navUsername');
- const userData = localStorage.getItem('user');
+// --- Display Username from localStorage ---
+const userNameSpan = document.getElementById("navUsername");
+const userData = localStorage.getItem("user");
 
- if (userData) {
-     try {
-         const user = JSON.parse(userData);
-         const name = user.name || user.username || user.fullName || 'User';
-         userNameSpan.textContent = `Welcome, ${name}`;
-     } catch (error) {
-         console.error('Failed to parse user data:', error);
-         userNameSpan.textContent = 'Welcome';
-     }
- } else {
-     userNameSpan.textContent = 'Welcome';
- }
+if (userData) {
+  try {
+    const user = JSON.parse(userData);
+    const name = user.name || user.username || user.fullName || "User";
+    userNameSpan.textContent = `Welcome, ${name}`;
+  } catch (error) {
+    console.error("Failed to parse user data:", error);
+    userNameSpan.textContent = "Welcome";
+  }
+} else {
+  userNameSpan.textContent = "Welcome";
+}
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Mobile menu toggle
+  const mobileMenu = document.getElementById("mobile-menu");
+  const navLinks = document.querySelector(".nav-links");
 
+  mobileMenu.addEventListener("click", function () {
+    this.classList.toggle("active");
+    navLinks.classList.toggle("active");
+  });
 
+  // Initialize with one question
+  addNewQuestion();
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-    
-    mobileMenu.addEventListener('click', function() {
-        this.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-    
-    // Initialize with one question
-    addNewQuestion();
+  // Add question button
+  const addQuestionBtn = document.getElementById("addQuestion");
+  addQuestionBtn.addEventListener("click", addNewQuestion);
 
-    // Add question button
-    const addQuestionBtn = document.getElementById('addQuestion');
-    addQuestionBtn.addEventListener('click', addNewQuestion);
-    
-    // Save draft button
-    const saveDraftBtn = document.getElementById('saveDraft');
-    saveDraftBtn.addEventListener('click', function() {
-        showToast('Draft saved successfully!', 'success');
-    });
-    
-    // Form submission
-    const quizForm = document.getElementById('quizForm');
-    quizForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        validateAndSubmitQuiz();
-    });
-    
-    // Popup close buttons
-    const closePopup = document.querySelector('.close');
-    const closePopupBtn = document.getElementById('closePopup');
-    const popup = document.getElementById('quizPopup');
-    
-    closePopup.addEventListener('click', function() {
-        popup.style.display = 'none';
-    });
-    
-    closePopupBtn.addEventListener('click', function() {
-        popup.style.display = 'none';
-    });
-    
-    // View quiz button
-    const viewQuizBtn = document.getElementById('viewQuiz');
-    viewQuizBtn.addEventListener('click', function() {
-        showToast('This would navigate to the quiz page in a real app', 'success');
-    });
-    
-    // Copy link button
-    const copyLinkBtn = document.querySelector('.copy-link');
-    copyLinkBtn.addEventListener('click', function() {
-        const quizLink = document.getElementById('quizLink').textContent;
-        navigator.clipboard.writeText(quizLink);
-        showToast('Link copied to clipboard!', 'success');
-    });
+  // Save draft button
+  const saveDraftBtn = document.getElementById("saveDraft");
+  saveDraftBtn.addEventListener("click", function () {
+    showToast("Draft saved successfully!", "success");
+  });
+
+  // Form submission
+  const quizForm = document.getElementById("quizForm");
+  quizForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    validateAndSubmitQuiz();
+  });
+
+  // Popup close buttons
+  const closePopup = document.querySelector(".close");
+  const closePopupBtn = document.getElementById("closePopup");
+  const popup = document.getElementById("quizPopup");
+
+  closePopup.addEventListener("click", function () {
+    popup.style.display = "none";
+  });
+
+  closePopupBtn.addEventListener("click", function () {
+    popup.style.display = "none";
+  });
+
+  // View quiz button
+  const viewQuizBtn = document.getElementById("viewQuiz");
+  viewQuizBtn.addEventListener("click", function () {
+    showToast("This would navigate to the quiz page in a real app", "success");
+  });
+
+  // Copy link button
+  const copyLinkBtn = document.querySelector(".copy-link");
+  copyLinkBtn.addEventListener("click", function () {
+    const quizLink = document.getElementById("quizLink").textContent;
+    navigator.clipboard.writeText(quizLink);
+    showToast("Link copied to clipboard!", "success");
+  });
 });
 
 // Add a new question to the form
 function addNewQuestion() {
-    const questionContainer = document.getElementById('questionContainer');
-    const questionCount = questionContainer.children.length + 1;
-    
-    const questionItem = document.createElement('div');
-    questionItem.className = 'question-item card-hover';
-    questionItem.innerHTML = `
-        <div class="question-header">
-            <span class="question-number">Question ${questionCount}</span>
-            <button class="delete-question" title="Delete question"><i class="fas fa-trash-alt"></i></button>
-        </div>
-        <div class="form-group">
-            <label for="question${questionCount}"><i class="fas fa-question"></i> Question Text</label>
-            <textarea id="question${questionCount}" placeholder="Enter your question..." required></textarea>
-        </div>
-        
-        <div class="options-group">
-            <h3><i class="fas fa-list-ol"></i> Options <span class="hint-text">(Click the checkmark to mark correct answer)</span></h3>
-            <div class="option-item">
-                <div class="option-number">A</div>
-                <input type="text" placeholder="Option 1" required>
-                <button class="correct-btn" title="Mark as correct answer"><i class="far fa-check-circle"></i></button>
-                <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="option-item">
-                <div class="option-number">B</div>
-                <input type="text" placeholder="Option 2" required>
-                <button class="correct-btn" title="Mark as correct answer"><i class="far fa-circle"></i></button>
-                <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
-            </div>
-            <button class="add-option-btn"><i class="fas fa-plus"></i> Add Another Option</button>
-        </div>
-    `;
-    
-    questionContainer.appendChild(questionItem);
-    
-    // Add event listeners for the new question
-    setupQuestionEvents(questionItem);
-    
-    // Scroll to the new question
-    questionItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const questionContainer = document.getElementById("questionContainer");
+  const questionCount = questionContainer.children.length + 1;
+
+  const questionItem = document.createElement("div");
+  questionItem.className = "question-item card-hover";
+  questionItem.innerHTML = `
+    <div class="question-header">
+      <span class="question-number">Question ${questionCount}</span>
+      <button class="delete-question" title="Delete question"><i class="fas fa-trash-alt"></i></button>
+    </div>
+    <div class="form-group">
+      <label for="question${questionCount}"><i class="fas fa-question"></i> Question Text</label>
+      <textarea id="question${questionCount}" placeholder="Enter your question..." required></textarea>
+    </div>
+    <div class="options-group">
+      <h3><i class="fas fa-list-ol"></i> Options <span class="hint-text">(Click the checkmark to mark correct answer)</span></h3>
+      <div class="option-item">
+        <div class="option-number">A</div>
+        <input type="text" placeholder="Option 1" required>
+        <button class="correct-btn" title="Mark as correct answer"><i class="far fa-check-circle"></i></button>
+        <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="option-item">
+        <div class="option-number">B</div>
+        <input type="text" placeholder="Option 2" required>
+        <button class="correct-btn" title="Mark as correct answer"><i class="far fa-circle"></i></button>
+        <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
+      </div>
+      <button class="add-option-btn"><i class="fas fa-plus"></i> Add Another Option</button>
+    </div>
+  `;
+
+  questionContainer.appendChild(questionItem);
+  setupQuestionEvents(questionItem);
+  questionItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 // Set up event listeners for a question element
 function setupQuestionEvents(questionItem) {
-    // Delete question button
-    const deleteBtn = questionItem.querySelector('.delete-question');
-    deleteBtn.addEventListener('click', function() {
-        if (document.querySelectorAll('.question-item').length > 1) {
-            questionItem.remove();
-            updateQuestionNumbers();
-        } else {
-            showToast('You need at least one question!', 'error');
-        }
+  const deleteBtn = questionItem.querySelector(".delete-question");
+  deleteBtn.addEventListener("click", function () {
+    if (document.querySelectorAll(".question-item").length > 1) {
+      questionItem.remove();
+      updateQuestionNumbers();
+    } else {
+      showToast("You need at least one question!", "error");
+    }
+  });
+
+  const correctBtns = questionItem.querySelectorAll(".correct-btn");
+  correctBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      questionItem.querySelectorAll(".correct-btn").forEach((b) => {
+        b.classList.remove("selected");
+        b.innerHTML = '<i class="far fa-circle"></i>';
+      });
+      this.classList.add("selected");
+      this.innerHTML = '<i class="far fa-check-circle"></i>';
     });
-    
-    // Correct answer buttons
-    const correctBtns = questionItem.querySelectorAll('.correct-btn');
-    correctBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Remove selected class from all buttons in this question
-            questionItem.querySelectorAll('.correct-btn').forEach(b => {
-                b.classList.remove('selected');
-                b.innerHTML = '<i class="far fa-circle"></i>';
-            });
-            
-            // Add selected class to clicked button
-            this.classList.add('selected');
-            this.innerHTML = '<i class="far fa-check-circle"></i>';
-        });
+  });
+
+  const addOptionBtn = questionItem.querySelector(".add-option-btn");
+  addOptionBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    addNewOption(questionItem);
+  });
+
+  const removeOptionBtns = questionItem.querySelectorAll(".remove-option");
+  removeOptionBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (questionItem.querySelectorAll(".option-item").length > 2) {
+        this.parentElement.remove();
+        updateOptionNumbers(questionItem);
+      } else {
+        showToast("You need at least two options!", "error");
+      }
     });
-    
-    // Add option button
-    const addOptionBtn = questionItem.querySelector('.add-option-btn');
-    addOptionBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        addNewOption(questionItem);
-    });
-    
-    // Remove option buttons
-    const removeOptionBtns = questionItem.querySelectorAll('.remove-option');
-    removeOptionBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (questionItem.querySelectorAll('.option-item').length > 2) {
-                this.parentElement.remove();
-                updateOptionNumbers(questionItem);
-            } else {
-                showToast('You need at least two options!', 'error');
-            }
-        });
-    });
+  });
 }
 
 // Add a new option to a question
 function addNewOption(questionItem) {
-    const optionsGroup = questionItem.querySelector('.options-group');
-    const optionCount = questionItem.querySelectorAll('.option-item').length;
-    const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    
-    if (optionCount >= 8) {
-        showToast('Maximum of 8 options allowed', 'error');
-        return;
+  const optionsGroup = questionItem.querySelector(".options-group");
+  const optionCount = questionItem.querySelectorAll(".option-item").length;
+  const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  if (optionCount >= 8) {
+    showToast("Maximum of 8 options allowed", "error");
+    return;
+  }
+
+  const optionItem = document.createElement("div");
+  optionItem.className = "option-item";
+  optionItem.innerHTML = `
+    <div class="option-number">${optionLetters[optionCount]}</div>
+    <input type="text" placeholder="Option ${optionCount + 1}" required>
+    <button class="correct-btn" title="Mark as correct answer"><i class="far fa-circle"></i></button>
+    <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
+  `;
+
+  optionsGroup.insertBefore(optionItem, questionItem.querySelector(".add-option-btn"));
+
+  const correctBtn = optionItem.querySelector(".correct-btn");
+  correctBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    questionItem.querySelectorAll(".correct-btn").forEach((b) => {
+      b.classList.remove("selected");
+      b.innerHTML = '<i class="far fa-circle"></i>';
+    });
+    this.classList.add("selected");
+    this.innerHTML = '<i class="far fa-check-circle"></i>';
+  });
+
+  const removeBtn = optionItem.querySelector(".remove-option");
+  removeBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (questionItem.querySelectorAll(".option-item").length > 2) {
+      optionItem.remove();
+      updateOptionNumbers(questionItem);
+    } else {
+      showToast("You need at least two options!", "error");
     }
-    
-    const optionItem = document.createElement('div');
-    optionItem.className = 'option-item';
-    optionItem.innerHTML = `
-        <div class="option-number">${optionLetters[optionCount]}</div>
-        <input type="text" placeholder="Option ${optionCount + 1}" required>
-        <button class="correct-btn" title="Mark as correct answer"><i class="far fa-circle"></i></button>
-        <button class="remove-option" title="Remove option"><i class="fas fa-times"></i></button>
-    `;
-    
-    // Insert before the add option button
-    optionsGroup.insertBefore(optionItem, questionItem.querySelector('.add-option-btn'));
-    
-    // Add event listeners for the new option
-    const correctBtn = optionItem.querySelector('.correct-btn');
-    correctBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Remove selected class from all buttons in this question
-        questionItem.querySelectorAll('.correct-btn').forEach(b => {
-            b.classList.remove('selected');
-            b.innerHTML = '<i class="far fa-circle"></i>';
-        });
-        
-        // Add selected class to clicked button
-        this.classList.add('selected');
-        this.innerHTML = '<i class="far fa-check-circle"></i>';
-    });
-    
-    const removeBtn = optionItem.querySelector('.remove-option');
-    removeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (questionItem.querySelectorAll('.option-item').length > 2) {
-            optionItem.remove();
-            updateOptionNumbers(questionItem);
-        } else {
-            showToast('You need at least two options!', 'error');
-        }
-    });
+  });
 }
 
 // Update question numbers after deletion
 function updateQuestionNumbers() {
-    const questions = document.querySelectorAll('.question-item');
-    questions.forEach((question, index) => {
-        const questionNumber = question.querySelector('.question-number');
-        questionNumber.textContent = `Question ${index + 1}`;
-    });
+  const questions = document.querySelectorAll(".question-item");
+  questions.forEach((question, index) => {
+    const questionNumber = question.querySelector(".question-number");
+    questionNumber.textContent = `Question ${index + 1}`;
+  });
 }
 
 // Update option letters after deletion
 function updateOptionNumbers(questionItem) {
-    const optionItems = questionItem.querySelectorAll('.option-item');
-    const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const optionItems = questionItem.querySelectorAll(".option-item");
+  const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  optionItems.forEach((item, index) => {
+    const optionNumber = item.querySelector(".option-number");
+    optionNumber.textContent = optionLetters[index];
+  });
+}
+
+// Prepare quiz data for API submission
+function prepareQuizData() {
+  const examName = localStorage.getItem("examName");
+  const userData = localStorage.getItem("user");
+  let user = "Anonymous";
+  
+  try {
+    if (userData) {
+      user = JSON.parse(userData).name || "Anonymous";
+    }
     
-    optionItems.forEach((item, index) => {
-        const optionNumber = item.querySelector('.option-number');
-        optionNumber.textContent = optionLetters[index];
+    const quizTitle = examName || "Untitled Quiz";
+    const questions = [];
+    const questionElements = document.querySelectorAll(".question-item");
+
+    questionElements.forEach((questionEl) => {
+      const questionText = questionEl.querySelector("textarea")?.value.trim();
+      if (!questionText) return;
+
+      const answers = [];
+      const optionItems = questionEl.querySelectorAll(".option-item");
+      let hasCorrectAnswer = false;
+
+      optionItems.forEach((optionEl) => {
+        const input = optionEl.querySelector("input");
+        const val = input?.value.trim();
+        if (val) {
+          const isCorrect = optionEl.querySelector(".correct-btn.selected") !== null;
+          answers.push({
+            answerText: val,
+            correctAnswer: isCorrect
+          });
+          
+          if (isCorrect) {
+            hasCorrectAnswer = true;
+          }
+        }
+      });
+
+      if (answers.length < 2 || !hasCorrectAnswer) {
+        console.warn("Skipping invalid question - needs at least 2 options and one correct answer");
+        return;
+      }
+
+      questions.push({
+        questionText: questionText,
+        answers: answers
+      });
     });
+
+    if (questions.length === 0) {
+      throw new Error("No valid questions were added");
+    }
+
+    return {
+      userName: user,
+      title: quizTitle,
+      questions: questions,
+    };
+  } catch (error) {
+    console.error("Error preparing quiz data:", error);
+    throw new Error("Failed to prepare quiz: " + error.message);
+  }
 }
 
 // Validate and submit the quiz
-function validateAndSubmitQuiz() {
-    const questions = document.querySelectorAll('.question-item');
+async function validateAndSubmitQuiz() {
+  const submitBtn = document.getElementById("submitQuiz");
+  if (!submitBtn) {
+    console.error("Submit button not found");
+    return;
+  }
+
+  const originalBtnText = submitBtn.innerHTML;
+
+  try {
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    
+
+    // Basic validation
+    const questionElements = document.querySelectorAll(".question-item");
     let isValid = true;
-    
-    // Validate each question
-    questions.forEach(question => {
-        const questionText = question.querySelector('textarea');
-        if (!questionText.value.trim()) {
-            questionText.focus();
-            showToast('Please fill in all question texts', 'error');
-            isValid = false;
-            return;
+
+    questionElements.forEach((questionEl, index) => {
+      const questionText = questionEl.querySelector("textarea")?.value.trim();
+      if (!questionText) {
+        questionEl.querySelector("textarea")?.focus();
+        showToast(`Question ${index + 1} needs text`, "error");
+        isValid = false;
+        return;
+      }
+
+      const options = questionEl.querySelectorAll(".option-item input");
+      let validOptions = 0;
+      options.forEach((opt) => {
+        if (!opt.value.trim()) {
+          opt.focus();
+          showToast(`Question ${index + 1} has empty options`, "error");
+          isValid = false;
+          return;
         }
-        
-        const options = question.querySelectorAll('.option-item input');
-        options.forEach(option => {
-            if (!option.value.trim()) {
-                option.focus();
-                showToast('Please fill in all option texts', 'error');
-                isValid = false;
-                return;
-            }
-        });
-        
-        const hasCorrectAnswer = question.querySelector('.correct-btn.selected');
-        if (!hasCorrectAnswer) {
-            showToast('Please mark the correct answer for each question', 'error');
-            isValid = false;
-            return;
-        }
+        validOptions++;
+      });
+
+      if (validOptions < 2) {
+        showToast(`Question ${index + 1} needs at least 2 options`, "error");
+        isValid = false;
+        return;
+      }
+
+      if (!questionEl.querySelector(".correct-btn.selected")) {
+        showToast(`Question ${index + 1} needs a correct answer`, "error");
+        isValid = false;
+        return;
+      }
     });
-    
-    if (isValid) {
-        // In a real app, you would submit to a server here
-        // For demo, we'll show the success popup
-        showSuccessPopup();
+
+    if (!isValid) {
+      throw new Error("Please fix the validation errors");
     }
+
+    // Prepare and validate data
+    const quizData = prepareQuizData();
+    console.log("Quiz data to submit:", quizData);
+
+    const token = localStorage.getItem("authToken") || localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Please log in to create quizzes");
+    }
+
+    // Step 1: Create the quiz
+    const createResponse = await fetch("http://localhost:8081/quiz/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(quizData),
+    });
+
+    if (!createResponse.ok) {
+      const error = await createResponse.json().catch(() => ({}));
+      throw new Error(error.message || "Failed to create quiz");
+    }
+
+    const createData = await createResponse.json();
+    console.log("Quiz creation response:", createData);
+    
+    const quizId = createData.quizId || createData.id;
+    if (!quizId) {
+      throw new Error("Server did not return quiz ID");
+    }
+
+    // Step 2: Generate room code
+    const examId=localStorage.getItem("examId");
+    if (!examId) {
+        throw new Error("Exam ID not found in local storage");
+      }
+   
+    const roomResponse = await fetch(
+       
+      `http://localhost:8081/quiz/generate-room/${quizId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            quiz_id: quizId,
+            user_id: examId
+          })
+      }
+    );
+
+    if (!roomResponse.ok) {
+      const error = await roomResponse.json().catch(() => ({}));
+      throw new Error(error.message || "Failed to generate room");
+    }
+
+    const roomData = await roomResponse.json();
+    console.log("Room generation response:", roomData);
+    
+    const roomCode = roomData.roomCode;
+    if (!roomCode) {
+      throw new Error("Server did not return room code");
+    }
+
+    // Step 3: Show success popup with room code
+    showSuccessPopup(roomCode);
+
+  } catch (error) {
+    console.error("Quiz submission failed:", error);
+    showToast(error.message || "Submission failed. Please try again.", "error");
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  }
 }
 
-// Show success popup
-function showSuccessPopup() {
-    const popup = document.getElementById('quizPopup');
-    popup.style.display = 'flex';
-    
-    // Generate a random quiz ID for demo
-    const quizId = Math.random().toString(36).substring(2, 8);
-    document.getElementById('quizLink').textContent = `quizmaster.pro/quiz/${quizId}`;
+// Show success popup with room code
+function showSuccessPopup(roomCode) {
+  const popup = document.getElementById("quizPopup");
+  popup.style.display = "flex";
+  document.getElementById("quizLink").textContent = `${roomCode}`;
+  
+  // Update copy link button to use the actual room code
+  const copyLinkBtn = document.querySelector(".copy-link");
+  copyLinkBtn.addEventListener("click", function() {
+    navigator.clipboard.writeText(`quizmaster.pro/quiz/${roomCode}`);
+    showToast("Link copied to clipboard!", "success");
+  });
+  
+  // Update view quiz button to use the actual room code
+  const viewQuizBtn = document.getElementById("viewQuiz");
+  viewQuizBtn.addEventListener("click", function() {
+    window.location.href = `/HTML/review-quiz.html?roomCode=${roomCode}`;
+  });
 }
 
 // Show toast notification
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    document.body.appendChild(toast);
-    
+function showToast(message, type = "success") {
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <i class="fas ${type === "success" ? "fa-check-circle" : "fa-exclamation-circle"}"></i>
+    <span>${message}</span>
+  `;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+  
+  setTimeout(() => {
+    toast.classList.remove("show");
     setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }, 3000);
+      toast.remove();
+    }, 300);
+  }, 3000);
 }
+
+// Global Logout
+function performLogout() {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("rememberedEmail");
+  localStorage.removeItem("user");
+  localStorage.removeItem("examId");
+  localStorage.removeItem("examName");
+  window.location.href = "/HTML/index.html";
+}
+
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn?.addEventListener("click", function (e) {
+  e.preventDefault();
+  performLogout();
+});
