@@ -194,6 +194,7 @@ console.log(authToken)
                     
                     // Show success message
                     showAlert('Exam deleted successfully!', 'success');
+                    window.location.href="quiz-room.html"
                 } else {
                     const error = await response.json();
                     throw new Error(error.message || 'Failed to delete exam');
@@ -220,9 +221,8 @@ console.log(authToken)
         // Add event listeners to preview buttons
         document.querySelectorAll('.preview-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const examId = e.currentTarget.getAttribute('data-exam-id');
-                alert("preview :"+examId)
-                previewExam(examId);
+                
+                window.location.href='preview.html'
             });
         });
     }
