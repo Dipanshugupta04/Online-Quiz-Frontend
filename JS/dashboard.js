@@ -158,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const roomResult = await roomResponse.json();
       const roomCode = roomResult.roomCode;
+      localStorage.setItem("roomid",roomCode);
 
       if (roomCode) {
         showSuccessPopup(roomCode);

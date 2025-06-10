@@ -218,6 +218,7 @@ function updateOptionNumbers(questionItem) {
 function prepareQuizData() {
   const examName = localStorage.getItem("examName");
   const userData = localStorage.getItem("user");
+  const roomid=localStorage.getItem("roomid")
   let user = "Anonymous";
   
   try {
@@ -269,6 +270,7 @@ function prepareQuizData() {
     }
 
     return {
+      roomid:roomid,
       userName: user,
       title: quizTitle,
       questions: questions,
@@ -368,9 +370,10 @@ async function validateAndSubmitQuiz() {
     
     // Show success message
     showToast("Quiz created successfully!", "success");
+
     
     // Optionally redirect to another page
-    // window.location.href = "/HTML/quiz-management.html";
+    window.location.href = "create-quiz.html";
 
   } catch (error) {
     console.error("Quiz submission failed:", error);

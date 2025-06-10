@@ -1,39 +1,3 @@
-// Sample quiz data
-const quizData = {
-    title: "World Geography Challenge",
-    author: "Alex Johnson",
-    date: "June 15, 2023",
-    questions: [
-        {
-            text: "What is the capital of France?",
-            options: [
-                { text: "London", correct: false },
-                { text: "Berlin", correct: false },
-                { text: "Paris", correct: true },
-                { text: "Madrid", correct: false }
-            ]
-        },
-        {
-            text: "Which river is the longest in the world?",
-            options: [
-                { text: "Amazon", correct: false },
-                { text: "Nile", correct: true },
-                { text: "Yangtze", correct: false },
-                { text: "Mississippi", correct: false }
-            ]
-        },
-        {
-            text: "Which country has the largest population?",
-            options: [
-                { text: "India", correct: false },
-                { text: "United States", correct: false },
-                { text: "China", correct: true },
-                { text: "Indonesia", correct: false }
-            ]
-        }
-    ]
-};
-
 // DOM Elements
 const quizTitleEl = document.getElementById('quizTitle');
 const quizAuthorEl = document.getElementById('quizAuthor');
@@ -45,40 +9,87 @@ const publishBtn = document.getElementById('publishBtn');
 const userSection = document.getElementById('userSection');
 const userDropdown = document.getElementById('userDropdown');
 const navUsername = document.getElementById('navUsername');
+const uniqueIdDisplay = document.getElementById("uniqueid");
+
+// Get room ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get('roomid') || localStorage.getItem("roomid");
+const authToken = localStorage.getItem("authToken");
+const unique_id = localStorage.getItem("unique_id");
 
 // Initialize the page
-function init() {
-    // Load quiz data
+async function init() {
+    if (!authToken || !unique_id) {
+        window.location.href = '/HTML/login.html';
+        return;
+    }
+
+    if (unique_id && uniqueIdDisplay) {
+        uniqueIdDisplay.innerText = `ID: ${unique_id}`;
+    }
+
+    try {
+        // Load quiz data from API
+        const quizData = await fetchQuizData(roomId);
+        
+        // Render quiz data
+        renderQuiz(quizData);
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Load user data
+        loadUserData();
+
+    } catch (error) {
+        console.error('Error initializing quiz:', error);
+        alert('Failed to load quiz. Please try again.');
+        window.location.href = 'my-quizzes.html';
+    }
+}
+
+// Fetch quiz data from API
+async function fetchQuizData(roomId) {
+    const response = await fetch(`http://localhost:8081/api/quizzes/preview/${roomId}`, {
+        headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch quiz data');
+    }
+
+    return await response.json();
+}
+
+// Render quiz data
+function renderQuiz(quizData) {
     quizTitleEl.textContent = quizData.title;
-    quizAuthorEl.textContent = quizData.author;
-    quizDateEl.textContent = quizData.date;
+    quizAuthorEl.textContent = quizData.userName;
+    quizDateEl.textContent = new Date(quizData.createdAt).toLocaleDateString();
     questionCountEl.textContent = quizData.questions.length;
     
     // Render questions
-    renderQuestions();
-    
-    // Set up event listeners
-    setupEventListeners();
-    
-    // Load user data
-    loadUserData();
+    renderQuestions(quizData.questions);
 }
 
 // Render all questions
-function renderQuestions() {
+function renderQuestions(questions) {
     questionsContainerEl.innerHTML = '';
     
-    quizData.questions.forEach((question, index) => {
+    questions.forEach((question, index) => {
         const questionEl = document.createElement('div');
         questionEl.className = 'question-card';
         questionEl.innerHTML = `
-            <h3 class="question-text">Q${index + 1}. ${question.text}</h3>
+            <h3 class="question-text">Q${index + 1}. ${question.questionText}</h3>
             <ul class="options-list">
-                ${question.options.map((option, optIndex) => `
-                    <li class="option-item ${option.correct ? 'correct' : ''}">
+                ${question.answers.map((answer, optIndex) => `
+                    <li class="option-item ${answer.correctAnswer ? 'correct' : ''}">
                         <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
-                        ${option.text}
-                        ${option.correct ? '<i class="fas fa-check" style="margin-left: auto; color: var(--success-color);"></i>' : ''}
+                        ${answer.answerText}
+                        ${answer.correctAnswer ? '<i class="fas fa-check" style="margin-left: auto; color: var(--success-color);"></i>' : ''}
                     </li>
                 `).join('')}
             </ul>
@@ -100,15 +111,34 @@ function setupEventListeners() {
         userDropdown.classList.remove('show');
     });
 
-    // Button actions
+    // Edit button
     editBtn.addEventListener('click', function() {
-        alert('Edit quiz functionality would go here');
-        // window.location.href = 'edit-quiz.html?id=123';
+        window.location.href = `edit-quiz.html?roomid=${roomId}`;
     });
 
-    publishBtn.addEventListener('click', function() {
-        alert('Publish quiz functionality would go here');
-        // Typically would make an API call to publish the quiz
+    // Delete button
+    publishBtn.addEventListener('click', async function() {
+        if (confirm('Are you sure you want to delete this quiz? This action cannot be undone.')) {
+            try {
+                const response = await fetch(`http://localhost:8081/api/quizzes/${roomId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Quiz deleted successfully!');
+                    window.location.href = 'my-quizzes.html';
+                } else {
+                    throw new Error('Failed to delete quiz');
+                }
+            } catch (error) {
+                console.error('Error deleting quiz:', error);
+                alert('Failed to delete quiz. Please try again.');
+            }
+        }
     });
 
     // Logout
@@ -116,6 +146,7 @@ function setupEventListeners() {
         e.preventDefault();
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
+        localStorage.removeItem('unique_id');
         window.location.href = 'login.html';
     });
 }

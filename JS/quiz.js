@@ -95,7 +95,7 @@ console.log(authToken)
                     </button>
                 </td>
                 <td>
-                    <button class="action-btn preview-btn" data-exam-id="${exam.examName}">
+                    <button class="action-btn preview-btn" data-exam-id="${exam.examName}" data-room-code="${exam.roomCode}">
                         <i class="fas fa-eye"></i> Preview
                     </button>
                 </td>
@@ -221,8 +221,15 @@ console.log(authToken)
         // Add event listeners to preview buttons
         document.querySelectorAll('.preview-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                
-                window.location.href='preview.html'
+                // 'btn' is the button that was clicked
+                const roomid = btn.dataset.roomCode; // Directly access data-roomid from the clicked button
+        
+                if (roomid) {
+                    window.location.href = `preview.html?roomid=${encodeURIComponent(roomid)}`;
+                } else {
+                    console.error("Room ID not found on the clicked preview button.");
+                    // alert("Error: Room ID missing."); // User-friendly alert
+                }
             });
         });
     }
