@@ -346,7 +346,8 @@ if (document.getElementById("loginForm")) {
 
         // Store the token and user data
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("unique_id", data.unique_id);
+        localStorage.setItem("user", JSON.stringify({ name: data.user }));
 
         // If "Remember me" is checked, store in localStorage
         if (formData.remember) {
@@ -391,32 +392,46 @@ if (document.getElementById("loginForm")) {
 }
 // Handle response from Google Sign-In
 function handleCredentialResponse(response) {
-    const idToken = response.credential;
-    console.log("Google ID Token:", idToken);
+  const idToken = response.credential;
+  console.log("Google ID Token:", idToken);
 
-    fetch("http://localhost:8081/auth/google", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        mode: "cors",
-        body: JSON.stringify({ idToken })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.jwt && data.user) {
-            console.log("jwt"+data.jwt);
+  fetch("http://localhost:8081/auth/google", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    body: JSON.stringify({ idToken }),
+  })
+    .then((response) => response.json())
 
-            localStorage.setItem("authToken", data.jwt);
-            localStorage.setItem("user", JSON.stringify({name: data.user }));
-            console.log("Login successful! JWT and username saved to localStorage");
-            alert("Login successful!");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 100);
-        } else {
-            console.error("Invalid response format", data);
+    .then((data) => {
+      console.log(data);
+      if (data.jwt && (data.user || data.unique_id)) {
+        console.log("JWT:", data.jwt);
+
+        localStorage.setItem("authToken", data.jwt);
+
+        if (data.unique_id) {
+          localStorage.setItem("unique_id", data.unique_id);
         }
+
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify({ name: data.user }));
+        }
+
+        console.log("Login successful! Data saved to localStorage");
+        alert("Login successful!");
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 100);
+      } else {
+        console.error("Invalid response format", data);
+        alert("Login failed: Invalid response format");
+      }
     })
-    .catch(error => console.error("Error logging in:", error));
+
+    .catch((error) => console.error("Error logging in:", error));
 }
+console.log(response);

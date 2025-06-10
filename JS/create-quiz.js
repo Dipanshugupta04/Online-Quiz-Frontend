@@ -1,6 +1,12 @@
 // --- User Dropdown Toggle ---
 const userSection = document.getElementById("userSection");
 const userDropdown = document.getElementById("userDropdown");
+const id = localStorage.getItem("unique_id");
+const unique_id = document.getElementById("uniqueid"); 
+
+if (id && unique_id) {
+    unique_id.innerText = "ID: " + id;
+}
 
 userSection?.addEventListener("click", function (e) {
   e.stopPropagation();
@@ -56,33 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
   quizForm.addEventListener("submit", function (e) {
     e.preventDefault();
     validateAndSubmitQuiz();
-  });
-
-  // Popup close buttons
-  const closePopup = document.querySelector(".close");
-  const closePopupBtn = document.getElementById("closePopup");
-  const popup = document.getElementById("quizPopup");
-
-  closePopup.addEventListener("click", function () {
-    popup.style.display = "none";
-  });
-
-  closePopupBtn.addEventListener("click", function () {
-    popup.style.display = "none";
-  });
-
-  // View quiz button
-  const viewQuizBtn = document.getElementById("viewQuiz");
-  viewQuizBtn.addEventListener("click", function () {
-    showToast("This would navigate to the quiz page in a real app", "success");
-  });
-
-  // Copy link button
-  const copyLinkBtn = document.querySelector(".copy-link");
-  copyLinkBtn.addEventListener("click", function () {
-    const quizLink = document.getElementById("quizLink").textContent;
-    navigator.clipboard.writeText(quizLink);
-    showToast("Link copied to clipboard!", "success");
   });
 });
 
@@ -314,7 +293,6 @@ async function validateAndSubmitQuiz() {
     // Show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-    
 
     // Basic validation
     const questionElements = document.querySelectorAll(".question-item");
@@ -367,7 +345,7 @@ async function validateAndSubmitQuiz() {
       throw new Error("Please log in to create quizzes");
     }
 
-    // Step 1: Create the quiz
+    // Create the quiz
     const createResponse = await fetch("http://localhost:8081/quiz/create", {
       method: "POST",
       headers: {
@@ -385,75 +363,22 @@ async function validateAndSubmitQuiz() {
     const createData = await createResponse.json();
     console.log("Quiz creation response:", createData);
     
-    const quizId = createData.quizId || createData.id;
-    if (!quizId) {
-      throw new Error("Server did not return quiz ID");
-    }
-
-    // Step 2: Generate room code
-    const examId=localStorage.getItem("examId");
-    if (!examId) {
-        throw new Error("Exam ID not found in local storage");
-      }
-   
-    const roomResponse = await fetch(
-       
-      `http://localhost:8081/quiz/generate-room/${quizId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            quiz_id: quizId,
-            user_id: examId
-          })
-      }
-    );
-
-    if (!roomResponse.ok) {
-      const error = await roomResponse.json().catch(() => ({}));
-      throw new Error(error.message || "Failed to generate room");
-    }
-
-    const roomData = await roomResponse.json();
-    console.log("Room generation response:", roomData);
+    // Store the quiz ID for future use
+    localStorage.setItem("currentQuizId", createData.quizId || createData.id);
     
-    const roomCode = roomData.roomCode;
-    if (!roomCode) {
-      throw new Error("Server did not return room code");
-    }
-
-    // Step 3: Show success popup with room code
-    showSuccessPopup(roomCode);
+    // Show success message
+    showToast("Quiz created successfully!", "success");
+    
+    // Optionally redirect to another page
+    // window.location.href = "/HTML/quiz-management.html";
 
   } catch (error) {
     console.error("Quiz submission failed:", error);
     showToast(error.message || "Submission failed. Please try again.", "error");
+  } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnText;
   }
-}
-
-// Show success popup with room code
-function showSuccessPopup(roomCode) {
-  const popup = document.getElementById("quizPopup");
-  popup.style.display = "flex";
-  document.getElementById("quizLink").textContent = `${roomCode}`;
-  
-  // Update copy link button to use the actual room code
-  const copyLinkBtn = document.querySelector(".copy-link");
-  copyLinkBtn.addEventListener("click", function() {
-    navigator.clipboard.writeText(`quizmaster.pro/quiz/${roomCode}`);
-    showToast("Link copied to clipboard!", "success");
-  });
-  
-  // Update view quiz button to use the actual room code
-  const viewQuizBtn = document.getElementById("viewQuiz");
-  viewQuizBtn.addEventListener("click", function() {
-    window.location.href = `/HTML/review-quiz.html?roomCode=${roomCode}`;
-  });
 }
 
 // Show toast notification
@@ -485,6 +410,7 @@ function performLogout() {
   localStorage.removeItem("user");
   localStorage.removeItem("examId");
   localStorage.removeItem("examName");
+  localStorage.removeItem("unique_id");
   window.location.href = "/HTML/index.html";
 }
 
@@ -493,3 +419,14 @@ logoutBtn?.addEventListener("click", function (e) {
   e.preventDefault();
   performLogout();
 });
+
+const myquiz = document.querySelector("#cta-btn_quiz");
+if (myquiz) {
+  myquiz.addEventListener("click", function (e) {
+    if (localStorage.getItem("authToken")) {
+      window.location.href = "quiz-room.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+}

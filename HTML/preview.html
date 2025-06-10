@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Preview | QuizMaster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="/CSS/preview.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>QuizMaster</span>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#"><i class="fas fa-home"></i> Home</a>
+            <a href="#"><i class="fas fa-book"></i> My Quizzes</a>
+            <a href="#"><i class="fas fa-chart-bar"></i> Analytics</a>
+        </nav>
+        
+        <div class="user-section" id="userSection">
+            <span id="navUsername">Welcome, User</span>
+            <i class="fas fa-user-circle" style="font-size: 1.5rem;"></i>
+            <div class="user-dropdown" id="userDropdown">
+                <a href="#"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="preview-container">
+        <div class="quiz-header">
+            <h1 class="quiz-title" id="quizTitle">Sample Quiz Title</h1>
+            <div class="quiz-meta">
+                <span><i class="fas fa-user"></i> Created by: <span id="quizAuthor">John Doe</span></span>
+                <span><i class="fas fa-calendar-alt"></i> Created on: <span id="quizDate">June 15, 2023</span></span>
+                <span><i class="fas fa-question-circle"></i> Questions: <span id="questionCount">5</span></span>
+            </div>
+        </div>
+        
+        <div id="questionsContainer">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-outline" id="editBtn">
+                <i class="fas fa-edit"></i> Edit Quiz
+            </button>
+            <button class="btn btn-primary" id="publishBtn">
+                <i class="fas fa-share-square"></i> Publish Quiz
+            </button>
+        </div>
+    </div>
+
+    <script src="/JS/preview.js"></script>
+</body>
+</html>

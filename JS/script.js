@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("user");
     localStorage.removeItem("examId");
     localStorage.removeItem("examName");
+    localStorage.removeItem("unique_id");
     // Remove other keys if needed
     window.location.href = "/HTML/index.html";
   }
@@ -109,7 +110,13 @@ document.addEventListener("DOMContentLoaded", function () {
       userDropdown.style.display = "none";
     });
   }
-
+  const id = localStorage.getItem("unique_id");
+  const unique_id = document.getElementById("uniqueid"); 
+  
+  if (id && unique_id) {
+      unique_id.innerText = "ID: " + id;
+  }
+  
   // Feature card animations
   const featureCards = document.querySelectorAll(".feature-card");
   if (featureCards.length > 0) {
@@ -236,6 +243,19 @@ document.addEventListener("DOMContentLoaded", function () {
       if (localStorage.getItem("authToken")) {
         // User is logged in - redirect to dashboard
         window.location.href = "dashboard.html";
+      } else {
+        // User is not logged in - redirect to login
+        window.location.href = "login.html";
+      }
+    });
+  }
+  const myquiz = document.querySelector("#cta-btn_quiz");
+  if (myquiz) {
+    myquiz.addEventListener("click", function (e) {
+      // Check if user is logged in
+      if (localStorage.getItem("authToken")) {
+        // User is logged in - redirect to dashboard
+        window.location.href = "quiz-room.html";
       } else {
         // User is not logged in - redirect to login
         window.location.href = "login.html";
