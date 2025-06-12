@@ -111,12 +111,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   const id = localStorage.getItem("unique_id");
-  const unique_id = document.getElementById("uniqueid"); 
-  
+  const unique_id = document.getElementById("uniqueid");
+
   if (id && unique_id) {
-      unique_id.innerText = "ID: " + id;
+    unique_id.innerText = "ID: " + id;
   }
-  
+
   // Feature card animations
   const featureCards = document.querySelectorAll(".feature-card");
   if (featureCards.length > 0) {
@@ -276,5 +276,99 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "login.html";
       }
     });
+  }
+});
+
+
+//JWT TOKWN EXPIRY CHECK
+
+import { decodeJwt } from "https://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
+
+const tokenKey = "authToken";
+const checkInterval = 5 * 60 * 1000; // Check every 5 minutes
+let logoutInProgress = false;
+
+// Enhanced token expiration check with error handling
+function getTokenExpiration(token) {
+  if (!token) return null;
+  
+  try {
+    const decodedToken = decodeJwt(token);
+    return decodedToken?.exp ? decodedToken.exp * 1000 : null;
+  } catch (error) {
+    console.error("Token validation error:", error.message);
+    return null;
+  }
+}
+
+// Safe token expiration check
+function isTokenExpired(token) {
+  const expirationTime = getTokenExpiration(token);
+  return expirationTime ? Date.now() >= expirationTime : true;
+}
+
+// Safe logout handler with navigation guard
+async function autoLogout() {
+  if (logoutInProgress) return;
+  logoutInProgress = true;
+  
+  console.log("Session expired. Performing automatic logout...");
+  
+  // Clear all auth-related data
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("currentQuizId");
+  localStorage.removeItem("examId");
+  localStorage.removeItem("examName");
+  
+  // Use replaceState before redirect to prevent navigation issues
+  window.history.replaceState(null, "", window.location.href);
+  
+  // Delay redirect to ensure state is properly updated
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  // Check if we're already on the index page to avoid unnecessary redirects
+  if (!window.location.pathname.endsWith("index.html")) {
+    window.location.href = "index.html";
+  }
+  
+  logoutInProgress = false;
+}
+
+// Main token validation function
+function validateToken() {
+  try {
+    const token = localStorage.getItem(tokenKey);
+    if (isTokenExpired(token)) {
+      autoLogout();
+    }
+  } catch (error) {
+    console.error("Token validation failed:", error);
+    autoLogout();
+  }
+}
+
+// Initial check on page load
+document.addEventListener("DOMContentLoaded", () => {
+  validateToken();
+  
+  // Set up periodic checks with cleanup on page unload
+  const intervalId = setInterval(validateToken, checkInterval);
+  
+  window.addEventListener("beforeunload", () => {
+    clearInterval(intervalId);
+  });
+});
+
+// Additional event listeners for better coverage
+window.addEventListener("storage", (event) => {
+  if (event.key === tokenKey) {
+    validateToken();
+  }
+});
+
+// Visibility change handler for when user returns to tab
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    validateToken();
   }
 });

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | QuizWiz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/styles.css">
+  <style>
+    :root {
+      --primary-color: #6c5ce7;
+      --primary-light: rgba(108, 92, 231, 0.2);
+      --secondary-color: #a29bfe;
+      --accent-color: #fd79a8;
+      --accent-light: rgba(253, 121, 168, 0.2);
+      --text-color: #2d3436;
+      --light-text: #636e72;
+      --bg-color: #f9f9f9;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #f9f9f9 100%);
+      color: var(--text-color);
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* Floating background elements */
+    .bg-elements {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .bg-element {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.15;
+    }
+    
+    .bg-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary-color);
+      top: -50px;
+      left: -50px;
+      animation: float 15s infinite ease-in-out;
+    }
+    
+    .bg-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent-color);
+      bottom: -100px;
+      right: -100px;
+      animation: float 18s infinite ease-in-out reverse;
+    }
+    
+    .bg-3 {
+      width: 200px;
+      height: 200px;
+      background: var(--secondary-color);
+      top: 40%;
+      right: 20%;
+      animation: float 12s infinite ease-in-out 2s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(10px, 10px); }
+      50% { transform: translate(20px, -10px); }
+      75% { transform: translate(-10px, 15px); }
+    }
+    
+    .nav-glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .privacy-container {
+      max-width: 1000px;
+      margin: 100px auto;
+      padding: 50px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeIn 0.6s forwards 0.3s;
+    }
+    
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 3rem;
+      position: relative;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(108, 92, 231, 0.1);
+    }
+    
+    h1:after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      margin: 20px auto;
+      border-radius: 5px;
+    }
+    
+    h2 {
+      color: var(--primary-color);
+      margin-top: 50px;
+      font-size: 1.8rem;
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    h2:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent-color);
+      border-radius: 50%;
+    }
+    
+    p, li {
+      margin-bottom: 25px;
+      color: var(--light-text);
+      font-size: 1.05rem;
+    }
+    
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary-color);
+      padding: 25px;
+      margin: 40px 0;
+      border-radius: 0 12px 12px 0;
+      transition: var(--transition);
+    }
+    
+    .highlight-box:hover {
+      transform: translateX(5px);
+      box-shadow: 5px 5px 15px rgba(108, 92, 231, 0.1);
+    }
+    
+    .last-updated {
+      text-align: right;
+      font-style: italic;
+      color: var(--light-text);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    
+    .section-divider {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.3), transparent);
+      margin: 50px 0;
+    }
+    
+    .data-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+    
+    .data-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border-top: 3px solid var(--secondary-color);
+      transition: var(--transition);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .data-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .data-card h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .security-badge {
+      display: flex;
+      align-items: center;
+      background: rgba(76, 209, 55, 0.1);
+      padding: 25px;
+      border-radius: 12px;
+      margin: 40px 0;
+      transition: var(--transition);
+      border: 1px solid rgba(76, 209, 55, 0.2);
+    }
+    
+    .security-badge:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(76, 209, 55, 0.1);
+    }
+    
+    .security-badge i {
+      color: #4cd137;
+      font-size: 2.5rem;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    
+    .consent-box {
+      background: var(--accent-light);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      margin-top: 50px;
+      transition: var(--transition);
+      border: 1px solid rgba(253, 121, 168, 0.2);
+    }
+    
+    .consent-box:hover {
+      transform: scale(1.01);
+      box-shadow: 0 10px 20px rgba(253, 121, 168, 0.1);
+    }
+    
+    .consent-box h3 {
+      color: var(--accent-color);
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+      z-index: 100;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      background: var(--accent-color);
+    }
+    
+    @media (max-width: 768px) {
+      .privacy-container {
+        margin: 60px 20px;
+        padding: 30px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .data-types {
+        grid-template-columns: 1fr;
+      }
+      
+      .security-badge {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .security-badge i {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background elements -->
+  <div class="bg-elements">
+    <div class="bg-element bg-1"></div>
+    <div class="bg-element bg-2"></div>
+    <div class="bg-element bg-3"></div>
+  </div>
+  
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="nav-glass">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>QuizWiz</span>
+      </div>
+      
+      <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      
+      <div class="nav-container" id="navContainer">
+        <ul class="nav-links">
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+      
+          <li><a href="#contact-section"><i class="fas fa-envelope"></i> Contact</a></li>
+          <li id="cta-btn_quiz"><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
+        </ul>
+        <div class="user-section" id="userSection">
+          <div class="user-profile">
+            <span id="navUsername"></span>
+            <div class="user-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+          </div>
+          <div class="user-dropdown" id="userDropdown">
+            <div id="uniqueid">
+              <span class="uniqueid-label">Your Unique ID</span>
+              #E29882
+            </div>
+            <a href="my-quizzes.html"><i class="fas fa-list"></i> Profile</a>
+            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
+        <div class="auth-buttons" id="authButtons">
+          <button class="login-btn pulse-on-hover" id="login-btn">
+            <i class="fas fa-sign-in-alt"></i> LOGIN
+          </button>
+          <button class="signup-btn pulse-on-hover" id="signup-btn">
+            <i class="fas fa-user-plus"></i> SIGN UP
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="privacy-container">
+    <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
+    
+    <p class="last-updated">Last updated: June 12, 2023</p>
+    
+    <div class="highlight-box">
+      <p><strong>Your privacy is our priority.</strong> At QuizWiz, we're committed to protecting your personal information with the highest standards of security and transparency.</p>
+    </div>
+    
+    <h2><i class="fas fa-database"></i> Information We Collect</h2>
+    <p>To provide you with an exceptional experience, we collect certain types of information:</p>
+    
+    <div class="data-types">
+      <div class="data-card">
+        <h3><i class="fas fa-user-tie"></i> Personal Information</h3>
+        <p>When you create an account, we collect your name, email address, and other details needed to personalize your experience.</p>
+      </div>
+      <div class="data-card">
+        <h3><i class="fas fa-chart-pie"></i> Usage Analytics</h3>
+        <p>We track how you interact with our platform to improve features and optimize performance.</p>
+      </div>
+      <div class="data-card">
+        <h3><i class="fas fa-microchip"></i> Technical Data</h3>
+        <p>Browser type, device information, and IP address help us ensure compatibility and security.</p>
+      </div>
+    </div>
+    
+    <h2><i class="fas fa-cogs"></i> How We Use Your Data</h2>
+    <p>Your information enables us to:</p>
+    <ul>
+      <li>Create and manage your account</li>
+      <li>Provide personalized quiz recommendations</li>
+      <li>Develop new features based on user behavior</li>
+      <li>Send important service notifications</li>
+      <li>Protect against fraudulent activity</li>
+      <li>Improve overall platform performance</li>
+    </ul>
+    
+    <hr class="section-divider">
+    
+    <h2><i class="fas fa-lock"></i> Data Protection</h2>
+    
+    <div class="security-badge">
+      <i class="fas fa-shield-check"></i>
+      <div>
+        <h3>Enterprise-Grade Security</h3>
+        <p>We employ 256-bit encryption, regular security audits, and strict access controls to protect your data. Our systems are monitored 24/7 for any suspicious activity.</p>
+      </div>
+    </div>
+    
+    <h2><i class="fas fa-exchange-alt"></i> Data Sharing</h2>
+    <p>We value your trust and limit data sharing to essential circumstances:</p>
+    <ul>
+      <li><strong>Service Providers:</strong> Only when necessary for platform operation (e.g., payment processing)</li>
+      <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+      <li><strong>With Your Consent:</strong> For specific features you choose to enable</li>
+    </ul>
+    
+    <h2><i class="fas fa-sync"></i> Policy Updates</h2>
+    <p>We may update this policy to reflect changes in our practices. Significant changes will be communicated via email or platform notifications.</p>
+    
+    <div class="consent-box">
+      <h3><i class="fas fa-hand-holding-heart"></i> Your Trust Matters</h3>
+      <p>By using QuizWiz, you agree to our collection and use of information as described in this policy. We're committed to being transparent about our data practices and giving you control over your information.</p>
+    </div>
+  </div>
+  
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+  <!-- Footer -->
+    <footer class="footer" id="contact-section">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-brain"></i>
+                <span>QuizWiz</span>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#aboutSection">Features</a></li>
+                        <!-- For Future -->
+                        <!-- <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Examples</a></li>
+                        <li><a href="#">Updates</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#aboutSection">About</a></li>
+                        <li><a href="#testimonialsSection">Careers</a></li>
+                          <!-- For Future -->
+                        <!-- <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                      <li>Help Center: <a href="tel:1234567890">1234567890</a></li>
+                      <li>Contact Us: <a href="mailto:xyz@gmail.com">xyz@gmail.com</a></li>
+                      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                      <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                  </div>
+                  
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 QuizWiz. All rights reserved.</p>
+        </div>
+    </footer>
+
+  
+  <script>
+ const loginBtn = document.getElementById("login-btn");
+ const signupBtn = document.getElementById("signup-btn");
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navigation toggle
+      const hamburger = document.getElementById('hamburger');
+      const navContainer = document.getElementById('navContainer');
+      
+      hamburger.addEventListener('click', function() {
+        navContainer.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // User dropdown
+      const userSection = document.getElementById('userSection');
+      const userDropdown = document.getElementById('userDropdown');
+      
+      if(userSection) {
+        userSection.addEventListener('click', function() {
+          userDropdown.classList.toggle('active');
+        });
+      }
+      
+      // Back to top button
+      const backToTop = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      });
+      
+      backToTop.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Animate elements when they come into view
+      const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.data-card, .highlight-box, .security-badge');
+        
+        elements.forEach(element => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+          
+          if (elementPosition < windowHeight - 100) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }
+        });
+      };
+      
+      // Set initial state for animations
+      document.querySelectorAll('.data-card, .highlight-box, .security-badge').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      });
+      
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll(); // Run once on load
+    });
+  </script>
+  <script src="/JS/privacyAndTerm.js"></script>
+</body>
+</html>

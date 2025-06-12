@@ -65,7 +65,11 @@ body {
     transition: var(--transition);
     z-index: 1001;
 }
-
+#navUsername{
+    color: rgba(0,0,0);
+    font-size: 1rem;
+    font-weight: bold;
+}
 .logo:hover {
     transform: scale(1.05);
 }
@@ -1010,3 +1014,24 @@ body {
     text-transform: none;
     letter-spacing: normal;
 }
+
+
+
+
+/* Add to your CSS file */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Highlight the about section when navigated to */
+section:target {
+    animation: highlight 2s ease;
+}
+
+@keyframes highlight {
+    0% { background-color: rgba(255,255,255,0.1); }
+    50% { background-color: rgba(255,255,255,0.3); }
+    100% { background-color: rgba(255,255,255,0); }
+}
+
+

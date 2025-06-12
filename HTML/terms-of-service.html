@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | QuizWiz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/styles.css">
+  
+  <style>
+    :root {
+      --primary-color: #6c5ce7;
+      --secondary-color: #a29bfe;
+      --accent-color: #fd79a8;
+      --text-color: #2d3436;
+      --light-text: #636e72;
+      --bg-color: #f9f9f9;
+      --card-bg: #ffffff;
+      --shadow: 0 8px 30px rgba(0,0,0,0.05);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .terms-container {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 40px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      position: relative;
+    }
+    
+    h1:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-color);
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary-color);
+      margin-top: 30px;
+      font-size: 1.5rem;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      color: var(--light-text);
+    }
+    
+    .highlight-box {
+      background: rgba(108, 92, 231, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .last-updated {
+      text-align: right;
+      font-style: italic;
+      color: var(--light-text);
+      font-size: 0.9rem;
+    }
+    
+    .section-divider {
+      border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(108, 92, 231, 0.5), rgba(0,0,0,0));
+      margin: 40px 0;
+    }
+    
+    .acceptance-section {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(253, 121, 168, 0.1);
+      border-radius: 12px;
+    }
+    
+    @media (max-width: 768px) {
+      .terms-container {
+        margin: 40px 20px;
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="nav-glass">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>QuizWiz</span>
+      </div>
+      
+      <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      
+      <div class="nav-container" id="navContainer">
+        <ul class="nav-links">
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+          
+          <li><a href="#contact-section"><i class="fas fa-envelope"></i> Contact</a></li>
+          <li id="cta-btn_quiz"><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
+        </ul>
+        <div class="user-section" id="userSection">
+          <div class="user-profile">
+            <span id="navUsername"></span>
+            <div class="user-avatar">
+              <i class="fas fa-user-circle"></i>
+            </div>
+          </div>
+          <div class="user-dropdown" id="userDropdown">
+            <div id="uniqueid">
+              <span class="uniqueid-label">Your Unique ID</span>
+              #E29882
+            </div>
+            <a href="my-quizzes.html"><i class="fas fa-list"></i> Profile</a>
+            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
+        <div class="auth-buttons" id="authButtons">
+          <button class="login-btn pulse-on-hover" id="login-btn">
+            <i class="fas fa-sign-in-alt"></i> LOGIN
+          </button>
+          <button class="signup-btn pulse-on-hover" id="signup-btn">
+            <i class="fas fa-user-plus"></i> SIGN UP
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="terms-container">
+    <h1><i class="fas fa-file-contract"></i> Terms of Service</h1>
+    
+    <p class="last-updated">Last updated: June 12, 2023</p>
+    
+    <div class="highlight-box">
+      <p><strong>Welcome to QuizWiz!</strong> By accessing and using our website, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.</p>
+    </div>
+    
+    <h2><i class="fas fa-user-shield"></i> User Responsibilities</h2>
+    <p>You agree to use our platform responsibly, ethically, and in accordance with all applicable laws. This includes respecting other users and not engaging in any harmful activities.</p>
+    
+    <h2><i class="fas fa-ban"></i> Prohibited Activities</h2>
+    <p>The following activities are strictly prohibited:</p>
+    <ul>
+      <li>Unauthorized access to systems or accounts</li>
+      <li>Data breaches or attempts to compromise security</li>
+      <li>Reverse engineering or tampering with platform functionality</li>
+      <li>Impersonation or fraudulent behavior</li>
+      <li>Harassment of other users</li>
+      <li>Any activity that degrades performance for other users</li>
+    </ul>
+    
+    <hr class="section-divider">
+    
+    <h2><i class="fas fa-gavel"></i> Our Rights</h2>
+    <p>We reserve the right to:</p>
+    <ul>
+      <li>Monitor user activity to ensure compliance</li>
+      <li>Suspend or terminate accounts that violate these terms</li>
+      <li>Modify or discontinue services at our discretion</li>
+      <li>Update these terms as needed</li>
+    </ul>
+    
+    <h2><i class="fas fa-sync-alt"></i> Changes to Terms</h2>
+    <p>We may update these Terms of Service periodically. Changes become effective when posted on our website. Your continued use of the platform after changes are posted constitutes acceptance of the new terms.</p>
+    
+    <div class="acceptance-section">
+      <h3><i class="fas fa-exclamation-circle"></i> Your Acceptance</h3>
+      <p>If you do not agree with any part of these terms, you should discontinue use of our services immediately. Your use of QuizWiz signifies that you understand and agree to be legally bound by these Terms of Service.</p>
+    </div>
+  </div>
+  <!-- Footer -->
+    <footer class="footer" id="contact-section">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-brain"></i>
+                <span>QuizWiz</span>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#aboutSection">Features</a></li>
+                        <!-- For Future -->
+                        <!-- <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Examples</a></li>
+                        <li><a href="#">Updates</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#aboutSection">About</a></li>
+                        <li><a href="#testimonialsSection">Careers</a></li>
+                          <!-- For Future -->
+                        <!-- <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                      <li>Help Center: <a href="tel:1234567890">1234567890</a></li>
+                      <li>Contact Us: <a href="mailto:xyz@gmail.com">xyz@gmail.com</a></li>
+                      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                      <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                  </div>
+                  
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 QuizWiz. All rights reserved.</p>
+        </div>
+    </footer>
+
+  
+  <script>
+    // You can add your existing JavaScript functionality here
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navigation toggle functionality
+      const hamburger = document.getElementById('hamburger');
+      const navContainer = document.getElementById('navContainer');
+      
+      hamburger.addEventListener('click', function() {
+        navContainer.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // User dropdown functionality
+      const userSection = document.getElementById('userSection');
+      const userDropdown = document.getElementById('userDropdown');
+      
+      if(userSection) {
+        userSection.addEventListener('click', function() {
+          userDropdown.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+<script src="/JS/privacyAndTerm.js"></script>
+  
+</body>
+</html>

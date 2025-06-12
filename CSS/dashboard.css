@@ -1,5 +1,6 @@
 /* dashboard.css */
 :root {
+    --primary: #6c5ce7;
     --primary-color: #4361ee;
     --secondary-color: #3f37c9;
     --accent-color: #4895ef;
@@ -49,10 +50,14 @@ nav {
     font-weight: 700;
     color: var(--primary-color);
 }
+.logo span{
+    color:var(--primary);
+}
 
 .logo i {
     margin-right: 10px;
     font-size: 1.8rem;
+    color: var(--primary);
 }
 
 .nav-links {
@@ -73,6 +78,11 @@ nav {
 
 .nav-links a:hover {
     color: var(--primary-color);
+}
+#navUsername{
+    color: rgba(0,0,0);
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .nav-links a i {

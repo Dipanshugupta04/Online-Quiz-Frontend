@@ -1,4 +1,5 @@
 :root {
+    --primary-icon: #6c5ce7;
     --primary: #4361ee;
     --primary-dark: #3a0ca3;
     --secondary: #3f37c9;
@@ -62,13 +63,17 @@ nav {
     align-items: center;
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--primary-icon);
     font-family: 'Montserrat', sans-serif;
 }
 
 .logo i {
     margin-right: 10px;
     font-size: 1.8rem;
+    color: var(--primary-icon);
+}
+.fa-user-circle{
+    color: var(--primary-icon);
 }
 
 .nav-links {
@@ -108,16 +113,7 @@ nav {
     width: 100%;
 }
 
-/* #cta-btn_quiz a {
-    color: white;
-    background: var(--primary);
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-} */
 
-/* #cta-btn_quiz a:hover {
-    background: var(--primary-dark);
-} */
 
 .user-section {
     position: relative;
@@ -129,6 +125,7 @@ nav {
     align-items: center;
     gap: 10px;
 }
+
 
 .user-avatar {
     font-size: 1.8rem;
@@ -526,6 +523,12 @@ tr:hover {
     
     #navUsername {
         display: none;
+
+    }
+    #navUsername{
+        color: rgba(0,0,0);
+        font-size: 1rem;
+        font-weight: bold;
     }
 }
 
@@ -563,7 +566,7 @@ tr:hover {
     }
 }
 #uniqueid {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-align: center;
     color: black;
     font-weight: 700;

@@ -113,7 +113,7 @@ function setupEventListeners() {
 
     // Edit button
     editBtn.addEventListener('click', function() {
-        window.location.href = `edit-quiz.html?roomid=${roomId}`;
+        window.location.href = `Edit_questions.html?roomid=${roomId}`;
     });
 
     // Delete button

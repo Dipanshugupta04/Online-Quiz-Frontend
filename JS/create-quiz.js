@@ -373,7 +373,10 @@ async function validateAndSubmitQuiz() {
 
     
     // Optionally redirect to another page
-    window.location.href = "create-quiz.html";
+    setTimeout(()=>{
+      window.location.href = "dashboard.html";
+    },1500);
+    
 
   } catch (error) {
     console.error("Quiz submission failed:", error);

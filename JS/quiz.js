@@ -50,7 +50,7 @@ console.log(authToken)
             renderExams(exams);
         } catch (error) {
             console.error("Error loading exams:", error);
-            showError("Failed to load exams: " + error.message);
+        alert("Failed to load exams: " + error.message);
             
             // Redirect to login if unauthorized
             if (error.message.includes("401") || error.message.includes("Authentication")) {
@@ -77,8 +77,8 @@ console.log(authToken)
                 <td>${exam.examName || 'N/A'}</td>
                 <td>${exam.duration || 0} min</td>
                 <td>${exam.createdBy || 'N/A'}</td>
-                <td>${formatDate(exam.startDate)}</td>
-                <td>${formatDate(exam.endDate)}</td>
+                <td>${exam.startDate}</td>
+                <td>${exam.endDate}</td>
       <td>
   ${exam.roomCode || "N/A"}
   <button class="copy-btn" data-room-code="${exam.roomCode}">
@@ -234,18 +234,7 @@ console.log(authToken)
         });
     }
 
-    function formatDate(isoDateTime) {
-        if (!isoDateTime || typeof isoDateTime !== 'string') return "N/A";
-        try {
-            const date = new Date(isoDateTime);
-            if (isNaN(date.getTime())) throw new Error("Invalid Date");
-            return date.toLocaleString(); // Includes date + time
-        } catch (e) {
-            console.error("Date formatting error:", isoDateTime, e);
-            return "N/A";
-        }
-    }
-    
+ 
 
     function previewExam(examId) {
         console.log("Previewing exam with ID:", examId);
@@ -326,7 +315,8 @@ console.log(authToken)
         errorElement.innerHTML = `
             <i class="fas fa-exclamation-circle"></i> ${message}
         `;
-        document.body.prepend(errorElement);
+        // document.body.prepend(errorElement);
+        alert(errorElement)
 
         // Auto-remove after 5 seconds
         setTimeout(() => {

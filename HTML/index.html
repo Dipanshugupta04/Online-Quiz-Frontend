@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizWiz - Interactive Quiz Platform</title>
+    <title>QuizWiz </title>
+    <link rel="stylesheet" href="/CSS/styles.css">
+    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/CSS/styles.css">
+  
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="nav-glass">
+
+    <header>
+            <nav class="nav-glass">
         <div class="logo">
             <i class="fas fa-brain"></i>
             <span>QuizWiz</span>
@@ -27,9 +31,9 @@
         <div class="nav-container" id="navContainer">
             <ul class="nav-links">
                 <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-                <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/HTML/Analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="#aboutSection"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#contact-section"><i class="fas fa-envelope"></i> Contact</a></li>
                 <li id="cta-btn_quiz"><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
             </ul>
             <div class="user-section" id="userSection">
@@ -63,6 +67,8 @@
            
         </div>
     </nav>
+</header>
+
 
     <!-- Hero Section -->
     <section class="hero">
@@ -87,7 +93,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features" id="aboutSection">
         <h2 class="section-title">Transform Your Experience With Our Platform</h2>
         <div class="features-grid">
             <div class="feature-card">
@@ -113,7 +119,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials">
+    <section class="testimonials"  id="testimonialsSection">
         <h2 class="section-title">What Our Users Say</h2>
         <div class="testimonial-slider">
             <div class="testimonial-card active">
@@ -157,7 +163,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="contact-section">
         <div class="footer-content">
             <div class="footer-logo">
                 <i class="fas fa-brain"></i>
@@ -167,30 +173,33 @@
                 <div class="footer-column">
                     <h4>Product</h4>
                     <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#aboutSection">Features</a></li>
+                        <!-- For Future -->
+                        <!-- <li><a href="#">Pricing</a></li>
                         <li><a href="#">Examples</a></li>
-                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">Updates</a></li> -->
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press</a></li>
+                        <li><a href="#aboutSection">About</a></li>
+                        <li><a href="#testimonialsSection">Careers</a></li>
+                          <!-- For Future -->
+                        <!-- <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li> -->
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                      <li>Help Center: <a href="tel:1234567890">1234567890</a></li>
+                      <li>Contact Us: <a href="mailto:xyz@gmail.com">xyz@gmail.com</a></li>
+                      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                      <li><a href="terms-of-service.html">Terms of Service</a></li>
                     </ul>
-                </div>
+                  </div>
+                  
             </div>
             <div class="footer-social">
                 <h4>Follow Us</h4>
@@ -208,6 +217,6 @@
         </div>
     </footer>
 
-    <script src="/JS/script.js"></script>
+    <script  type="module"  src="/JS/script.js"></script>
 </body>
 </html>

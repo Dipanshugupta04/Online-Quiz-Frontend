@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Quiz | QuizWiz</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/CSS/create-quiz.css" />
+  </head>
+  <body>
+    <div class="background-animation">
+      <div class="shape-circle"></div>
+      <div class="shape-blur"></div>
+      <div class="shape-dots"></div>
+    </div>
+
+    <header>
+    <nav class="glass-nav">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="fas fa-brain"></i>
+          <span>QuizWiz</span>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"
+              ><i class="fas fa-home"></i> <span>Home</span></a
+            >
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-chart-bar"></i> Analytics</a>
+          </li>
+          <li id="cta-btn_quiz">
+            <a href="quiz-room.html"
+              ><i class="fas fa-question-circle"></i> <span>My Quiz</span></a
+            >
+          </li>
+        </ul>
+        <div class="user-section" id="userSection">
+          <div class="user-profile">
+            <span id="navUsername"></span>
+                   
+                        <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="user-dropdown" id="userDropdown">
+            <p id="uniqueid"><i class="fas fa-user"></i></p>
+            <a href="my-quizzes.html"><i class="fas fa-list"></i> Profile</a>
+            <a href="#" id="logoutBtn"
+              ><i class="fas fa-sign-out-alt"></i> Logout</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+</header>
+
+    <div class="container">
+      <div class="quiz-card glass-card">
+        <div class="quiz-header">
+          <div class="header-icon">
+            <i class="fas fa-edit"></i>
+          </div>
+          <h1>Edit Quiz</h1>
+          <p class="quiz-instructions">
+            Update your quiz questions and correct answers
+          </p>
+        </div>
+
+        <div class="progress-tracker">
+          <div class="progress-step active">1. Questions</div>
+        </div>
+
+        <form class="quiz-form" id="quizForm">
+          <div class="form-group">
+            <label for="quizTitle"
+              ><i class="fas fa-heading"></i>
+              <h1>Tittle:</h1>
+              <div><h1 id="quizTitle"></h1></div
+            ></label>
+          </div>
+
+          <div class="question-group" id="questionContainer">
+            <!-- Questions will be added here dynamically from API -->
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="addQuestion" class="btn btn-secondary">
+              <i class="fas fa-plus"></i> Add Another Question
+            </button>
+            <div class="action-group">
+              <button type="button" id="saveDraft" class="btn btn-outline">
+                <i class="fas fa-save"></i> Save Draft
+              </button>
+              <button type="submit" id="updateQuiz" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> Update Quiz
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/JS/edit_question.js"></script>
+  </body>
+</html>
