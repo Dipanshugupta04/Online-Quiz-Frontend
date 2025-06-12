@@ -196,7 +196,7 @@ body {
 
 /* User Section Styles */
 .user-section {
-    display: none;
+    display: flex;
     position: relative;
     margin-left: 2rem;
 }

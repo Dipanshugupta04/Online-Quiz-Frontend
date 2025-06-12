@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("login-btn");
   const signupBtn = document.getElementById("signup-btn");
+ 
   // Check authentication status
   function checkAuthStatus() {
     const userData = localStorage.getItem("user");
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showAuthButtons();
     }
   }
-
+ 
   function showAuthButtons() {
     authButtons.style.display = "flex";
     userSection.style.display = "none";
@@ -249,6 +250,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  const analyticsBtn=document.querySelector("#cta-btn_analytics");
+  if (analyticsBtn) {
+    analyticsBtn.addEventListener("click", function (e) {
+      // Check if user is logged in
+      if (localStorage.getItem("authToken")) {
+        // User is logged in - redirect to dashboard
+        window.location.href = "Analytics.html";
+      } else {
+        // User is not logged in - redirect to login
+        window.location.href = "login.html";
+      }
+    });
+  }
+
   const myquiz = document.querySelector("#cta-btn_quiz");
   if (myquiz) {
     myquiz.addEventListener("click", function (e) {

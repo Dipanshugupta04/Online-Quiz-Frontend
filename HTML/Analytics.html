@@ -261,13 +261,13 @@ header {
         <ul class="nav-links">
           <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
           <li><a href="analytics.html" class="active"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-          <li><a href="#aboutSection"><i class="fas fa-info-circle"></i> About</a></li>
+       
           <li><a href="#contact-section"><i class="fas fa-envelope"></i> Contact</a></li>
           <li id="cta-btn_quiz"><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
         </ul>
         <div class="user-section" id="userSection">
           <div class="user-profile">
-            <span id="navUsername">John Doe</span>
+            <span id="navUsername"></span>
             <div class="user-avatar">
               <i class="fas fa-user-circle"></i>
             </div>
@@ -277,7 +277,7 @@ header {
               <span class="uniqueid-label">Your Unique ID</span>
               #E29882
             </div>
-            <a href="my-quizzes.html"><i class="fas fa-list"></i> Profile</a>
+            <a href="profile.html"><i class="fas fa-list"></i> Profile</a>
             <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
         </div>
@@ -495,10 +495,13 @@ header {
         });
       });
 
+      
+
       // User dropdown functionality
       const userSection = document.getElementById('userSection');
       const userDropdown = document.getElementById('userDropdown');
       
+
       if(userSection) {
         userSection.addEventListener('click', function() {
           userDropdown.classList.toggle('active');
@@ -506,5 +509,6 @@ header {
       }
     });
   </script>
+  <script type="module"  src="/JS/analytics.js"></script>
 </body>
 </html>

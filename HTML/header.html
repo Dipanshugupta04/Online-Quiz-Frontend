@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/CSS/header.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+     <!-- Navigation Bar -->
+
+     <header>
+        <nav class="nav-glass">
+    <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>QuizWiz</span>
+    </div>
+    
+    <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    
+    <div class="nav-container" id="navContainer">
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li id="cta-btn_analytics"><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+            <li><a href="#aboutSection"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#contact-section"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li id="cta-btn_quiz"><a href="#"><i class="fas fa-question-circle"></i> My Quiz</a></li>
+        </ul>
+        <div class="user-section" id="userSection">
+            <div class="user-profile">
+                <span id="navUsername"></span>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+            <div class="user-dropdown" id="userDropdown">
+                <div id="uniqueid">
+                    <span class="uniqueid-label">ID:</span>
+                    #E29882
+                </div>
+                <a href="profile.html"><i class="fas fa-list"></i> Profile</a>
+                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="auth-buttons" id="authButtons">
+           
+                <button class="login-btn pulse-on-hover" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> LOGIN
+                </button>
+     
+            
+                <button class="signup-btn pulse-on-hover" id="signup-btn">
+                    <i class="fas fa-user-plus"></i> SIGN UP
+                </button>
+            </a>
+        </div>
+       
+    </div>
+</nav>
+</header>
+<script src="/JS/header.js"></script>
+</body>
+</html>
