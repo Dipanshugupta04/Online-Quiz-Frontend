@@ -28,6 +28,7 @@ if (userData) {
     userNameSpan.textContent = `Welcome, ${name}`;
   } catch (error) {
     console.error("Failed to parse user data:", error);
+    window.location.href='error.html';
     userNameSpan.textContent = "Welcome";
   }
 } else {
@@ -277,6 +278,7 @@ function prepareQuizData() {
     };
   } catch (error) {
     console.error("Error preparing quiz data:", error);
+    window.location.href='error.html';
     throw new Error("Failed to prepare quiz: " + error.message);
   }
 }
@@ -380,6 +382,7 @@ async function validateAndSubmitQuiz() {
 
   } catch (error) {
     console.error("Quiz submission failed:", error);
+    window.location.href='error.html';
     showToast(error.message || "Submission failed. Please try again.", "error");
   } finally {
     submitBtn.disabled = false;

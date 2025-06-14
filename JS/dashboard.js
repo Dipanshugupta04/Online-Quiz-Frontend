@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       userNameSpan.textContent = `Welcome, ${name}`;
     } catch (error) {
       console.error("Failed to parse user data:", error);
+      window.location.href='error.html';
       userNameSpan.textContent = "Welcome";
     }
   } else {
@@ -169,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (error) {
       console.error("Error:", error);
+      window.location.href='error.html';
       alert(`Error: ${error.message}`);
     }
   });

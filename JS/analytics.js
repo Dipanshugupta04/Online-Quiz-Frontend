@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (navUsername) navUsername.textContent = `Welcome, ${name}`;
         } catch (e) {
           console.error("Error parsing user data:", e);
+          window.location.href='error.html'
           clearUserData();
         }
       }

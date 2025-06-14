@@ -49,6 +49,7 @@ console.log(authToken)
             const exams = await response.json();
             renderExams(exams);
         } catch (error) {
+            window.location.href='error.html';
             console.error("Error loading exams:", error);
         alert("Failed to load exams: " + error.message);
             
@@ -121,6 +122,7 @@ console.log(authToken)
                   showToast("Room ID copied to clipboard!", "success"); // More specific message
                 })
                 .catch(err => {
+                    window.location.href='error.html';
                   console.error('Failed to copy Room ID:', err); // Log the full error
                   showToast("Failed to copy Room ID. Please try again.", "error"); // Use your consistent toast
                 });
@@ -200,6 +202,7 @@ console.log(authToken)
                     throw new Error(error.message || 'Failed to delete exam');
                 }
             } catch (error) {
+                window.location.href='error.html';
                 console.error('Error:', error);
                 showAlert(error.message, 'error');
             }
@@ -250,6 +253,7 @@ console.log(authToken)
                 const name = user.name || user.username || "User";
                 userNameSpan.textContent = `Welcome, ${name}`;
             } catch (error) {
+                window.location.href='error.html';
                 console.error("Failed to parse user data:", error);
                 userNameSpan.textContent = "Welcome";
             }

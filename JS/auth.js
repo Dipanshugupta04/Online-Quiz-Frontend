@@ -283,6 +283,7 @@ if (document.getElementById("signupForm")) {
         // Show error message
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
+        window.location.href='error.html';
 
         // Display error to user
         const errorElement = document.createElement("div");
@@ -363,6 +364,7 @@ if (document.getElementById("loginForm")) {
       } catch (error) {
         // Show error message
         submitBtn.innerHTML = originalText;
+        window.location.href = "error.html";
         submitBtn.disabled = false;
 
         // Display error to user

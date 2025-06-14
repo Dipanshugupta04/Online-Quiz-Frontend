@@ -31,7 +31,7 @@ async function init() {
     try {
         // Load quiz data from API
         const quizData = await fetchQuizData(roomId);
-        
+        console.log(quizData);
         // Render quiz data
         renderQuiz(quizData);
         
@@ -44,7 +44,8 @@ async function init() {
     } catch (error) {
         console.error('Error initializing quiz:', error);
         alert('Failed to load quiz. Please try again.');
-        window.location.href = 'my-quizzes.html';
+    window.location.href = `error.html`
+        
     }
 }
 
@@ -130,12 +131,13 @@ function setupEventListeners() {
 
                 if (response.ok) {
                     alert('Quiz deleted successfully!');
-                    window.location.href = 'my-quizzes.html';
+                    window.location.href = 'quiz-room.html';
                 } else {
                     throw new Error('Failed to delete quiz');
                 }
             } catch (error) {
                 console.error('Error deleting quiz:', error);
+                window.location.href='error.html';
                 alert('Failed to delete quiz. Please try again.');
             }
         }
@@ -159,6 +161,7 @@ function loadUserData() {
             const user = JSON.parse(userData);
             navUsername.textContent = `Welcome, ${user.name || user.username || 'User'}`;
         } catch (e) {
+            window.location.href='error.html';
             console.error('Error parsing user data:', e);
         }
     }

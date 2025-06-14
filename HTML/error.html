@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oops! Something Went Wrong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles - You might want to move these to a global.css if you have one */
+        :root {
+            --primary: #6c5ce7;
+            --primary-light: #a29bfe;
+            --primary-dark: #5649c0;
+            --danger: #d63031;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .error-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            color: var(--danger);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--dark-light);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .error-details {
+            background-color: var(--light);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: var(--dark-light);
+            text-align: left;
+            word-break: break-all;
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            max-height: 150px; /* Limit height */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .error-icon {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <h1>Oops! Something Went Wrong.</h1>
+        <p>We're sorry, but an unexpected error occurred. Our team has been notified and is working to resolve it.</p>
+        <p>Please try navigating back to the <a href="index.html" class="primary-link" style="color: var(--primary); text-decoration: none; font-weight: 600;">homepage</a> or refreshing the page.</p>
+
+        <div class="error-details" id="errorMessage">
+            </div>
+
+        <a href="index.html" class="back-button">Go to Homepage</a>
+    </div>
+
+    <script>
+        // Retrieve error message from localStorage if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorMessageElement = document.getElementById('errorMessage');
+            const storedError = localStorage.getItem('appError');
+
+            if (storedError) {
+                errorMessageElement.textContent = `Error Details: ${storedError}`;
+                localStorage.removeItem('appError'); // Clear the error after displaying
+            } else {
+                errorMessageElement.style.display = 'none'; // Hide if no error details
+            }
+        });
+    </script>
+    <script src="/JS/main.js"></script>
+</body>
+</html>

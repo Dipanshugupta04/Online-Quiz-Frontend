@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
           userSection.style.display = "flex";
           navUsername.textContent = `Welcome, ${name}`;
         } catch (e) {
+          window.location.href='error.html';
           console.error("Error parsing user data:", e);
           clearUserData();
           showAuthButtons();
