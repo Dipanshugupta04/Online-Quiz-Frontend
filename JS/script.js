@@ -301,20 +301,26 @@ document.addEventListener("DOMContentLoaded", function () {
 //JWT TOKWN EXPIRY CHECK
 
 import { decodeJwt } from "https://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
+// const Token=localStorage.getItem('authToken');
 
-const tokenKey = "authToken";
 const checkInterval = 5 * 60 * 1000; // Check every 5 minutes
 let logoutInProgress = false;
 
 // Enhanced token expiration check with error handling
 function getTokenExpiration(token) {
-  if (!token) return null;
+  if (!token) {
+    // Clear all auth-related data
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("currentQuizId");
+  localStorage.removeItem("examId");
+  localStorage.removeItem("examName");
+  }
   
   try {
     const decodedToken = decodeJwt(token);
     return decodedToken?.exp ? decodedToken.exp * 1000 : null;
   } catch (error) {
-    window.location.href='error.html';
+  
     console.error("Token validation error:", error.message);
     return null;
   }
@@ -338,7 +344,10 @@ async function autoLogout() {
   localStorage.removeItem("currentQuizId");
   localStorage.removeItem("examId");
   localStorage.removeItem("examName");
-  
+localStorage.removeItem("quizDraft");
+localStorage.removeItem("roomid");
+localStorage.removeItem("unique_id");
+localStorage.removeItem("user");
   // Use replaceState before redirect to prevent navigation issues
   window.history.replaceState(null, "", window.location.href);
   
@@ -356,7 +365,7 @@ async function autoLogout() {
 // Main token validation function
 function validateToken() {
   try {
-    const token = localStorage.getItem(tokenKey);
+    const token = localStorage.getItem("authToken");
     if (isTokenExpired(token)) {
       autoLogout();
     }
@@ -395,141 +404,66 @@ document.addEventListener("visibilitychange", () => {
 
 
 
+let stompClient = null;
+let quizCode = '';
+let currentUser = null;
 
+// Join quiz function
+async function joinQuiz() {
+    quizCode = document.getElementById('quizCode').value.trim();
+ const email=localStorage.getItem('email');
+    
+    // Replace with dynamic email if needed
+    const authToken = localStorage.getItem('authToken');
 
-//websocket
+    if (!quizCode) {
+        alert('Please enter a quiz code');
+        return;
+    }
 
-
-
-    let stompClient = null;
-    let quizCode = '';
-    let currentUser = null;
-
-    // Connect to WebSocket
-    function connect() {
-        const socket = new SockJS('/quiz-websocket');
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, function(frame) {
-            console.log('Connected: ' + frame);
-            
-            // Subscribe to quiz updates
-            stompClient.subscribe('/topic/quiz/' + quizCode, function(message) {
-                const quizData = JSON.parse(message.body);
-                if (quizData.status === "ACTIVE") {
-                    displayQuiz(quizData.quiz);
-                }
-            });
-            
-            // Subscribe to participant updates
-            stompClient.subscribe('/topic/room/' + quizCode + '/participants', function(message) {
-                const data = JSON.parse(message.body);
-                updateParticipants(data);
-            });
+    try {
+        const response = await fetch('http://localhost:8081/quiz/join-room', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({ roomCode: quizCode, email: email })
         });
-    }
 
-    // Join quiz room
-    async function joinQuiz() {
-        quizCode = document.getElementById('quizCode').value.trim();
-        
-        const email = "dipanshuguptamitrc@gmail.com"; // Get from auth or input
-        console.log(quizCode);
-        
-        if (!quizCode) {
-            alert('Please enter a quiz code');
-            return;
+        const data = await response.json();
+        console.log(data);
+
+        if (data.status === 'success') {
+            currentUser = {
+                name: data.participantName,
+                email: email
+            };
+
+            // Store quiz data in session storage to pass to new page
+            sessionStorage.setItem('quizData', JSON.stringify({
+                quiz: data.quiz,
+                quizCode: quizCode,
+                user: currentUser
+            }));
+
+            // Open new page with quiz
+            window.location.href = 'quiz.html';
+
+        } else {
+            alert(data.message);
         }
-        const authToken=localStorage.getItem('authToken');
-
-        try {
-            const response = await fetch('http://localhost:8081/quiz/join-room', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`,
-                },
-                body: JSON.stringify({
-                    roomCode: quizCode,
-                    email: email
-                })
-            });
-            
-            const data = await response.json();
-            console.log(data);
-            
-            if (data.status === 'success') {
-                currentUser = {
-                    name: data.participantName,
-                    email: email
-                };
-                
-                // Connect to WebSocket after successful join
-                connect();
-                
-                // Display quiz if already active
-                if (data.quiz) {
-                    displayQuiz(data.quiz);
-                } else {
-                    showWaitingMessage();
-                }
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to join quiz');
-        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to join quiz');
     }
-
-    function displayQuiz(quiz) {
-        // Hide join form
-        document.querySelector('.hero-content').style.display = 'none';
-        
-        // Create quiz container
-        const quizContainer = document.createElement('div');
-        quizContainer.className = 'quiz-container';
-        quizContainer.innerHTML = `
-            <h2>${quiz.title}</h2>
-            <div class="participants-count">Participants: <span id="participantCount">1</span></div>
-            <div class="question-container" id="questionContainer"></div>
-            <div class="quiz-controls">
-                <button id="submitQuiz">Submit Answers</button>
-            </div>
-        `;
-        
-        document.querySelector('.hero').appendChild(quizContainer);
-        
-        // Display first question
-        displayQuestion(quiz.questions[0], 0, quiz.questions.length);
-        
-        // Set up event listeners
-        document.getElementById('submitQuiz').addEventListener('click', submitAnswers);
-    }
-
-    function showWaitingMessage() {
-        document.querySelector('.hero-content').innerHTML = `
-            <h1>Waiting for quiz to start...</h1>
-            <p>The quiz host needs to activate the quiz. Please wait.</p>
-            <div class="participants-count">Participants: <span id="participantCount">1</span></div>
-        `;
-    }
-
-    function updateParticipants(data) {
-        const countElement = document.getElementById('participantCount');
-        if (countElement) {
-            countElement.textContent = data.totalParticipants;
-        }
-        
-        // Optional: Show notification about new participant
-        if (data.action === 'participant_joined') {
-            showNotification(`${data.participantName} joined the quiz`);
-        }
-    }
-
-    function showNotification(message) {
-        // Implement notification UI
-        console.log('Notification:', message);
-    }
-
-    // Event listener for join button
-    document.getElementById('joinQuizBtn').addEventListener('click', joinQuiz);
+}
+const token=localStorage.getItem('authToken');
+// Button listener
+document.getElementById('joinQuizBtn').addEventListener('click', function () {
+  if (!token) {
+      window.location.href = 'login.html';
+  } else {
+      joinQuiz(); // Call the joinQuiz function if token is present
+  }
+});

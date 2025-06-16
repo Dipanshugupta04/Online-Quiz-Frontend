@@ -7,95 +7,158 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* General Styles - You might want to move these to a global.css if you have one */
         :root {
             --primary: #6c5ce7;
             --primary-light: #a29bfe;
             --primary-dark: #5649c0;
-            --danger: #d63031;
-            --dark: #2d3436;
+            --danger: #ff4757;
+            --danger-light: #ff6b81;
+            --dark: #2f3542;
             --light: #f8f9fa;
+            --gray: #dfe4ea;
             --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--light);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: var(--dark);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             text-align: center;
             padding: 20px;
-            box-sizing: border-box;
+            line-height: 1.6;
         }
 
         .error-container {
             background-color: #fff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: var(--shadow-md);
-            max-width: 600px;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            max-width: 650px;
             width: 100%;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--danger), var(--primary));
         }
 
         .error-icon {
             font-size: 5rem;
-            color: var(--danger);
             margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--danger), var(--danger-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulse 2s infinite;
         }
 
         h1 {
             font-size: 2.5rem;
             color: var(--dark);
             margin-bottom: 15px;
+            font-weight: 700;
         }
 
         p {
             font-size: 1.1rem;
-            color: var(--dark-light);
+            color: #57606f;
             margin-bottom: 25px;
-            line-height: 1.6;
         }
 
         .error-details {
-            background-color: var(--light);
-            border: 1px solid var(--gray);
-            border-radius: 8px;
+            background-color: rgba(214, 48, 49, 0.05);
+            border-left: 4px solid var(--danger);
+            border-radius: 4px;
             padding: 15px;
-            margin-top: 20px;
-            font-family: 'Courier New', Courier, monospace;
+            margin: 25px 0;
+            font-family: 'Fira Code', 'Courier New', monospace;
             font-size: 0.9rem;
-            color: var(--dark-light);
+            color: var(--dark);
             text-align: left;
-            word-break: break-all;
-            white-space: pre-wrap; /* Preserve whitespace and wrap text */
-            max-height: 150px; /* Limit height */
-            overflow-y: auto; /* Enable scrolling if content overflows */
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            margin-top: 30px;
+            word-break: break-word;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
             transition: var(--transition);
         }
 
-        .back-button:hover {
+        .error-details:hover {
+            box-shadow: 0 5px 15px rgba(214, 48, 49, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-primary:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(108, 92, 231, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .btn i {
+            margin-right: 8px;
         }
 
         @media (max-width: 600px) {
+            .error-container {
+                padding: 30px;
+            }
+            
             h1 {
                 font-size: 2rem;
             }
@@ -103,36 +166,97 @@
             .error-icon {
                 font-size: 4rem;
             }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
     <div class="error-container">
         <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
-        <h1>Oops! Something Went Wrong.</h1>
-        <p>We're sorry, but an unexpected error occurred. Our team has been notified and is working to resolve it.</p>
-        <p>Please try navigating back to the <a href="index.html" class="primary-link" style="color: var(--primary); text-decoration: none; font-weight: 600;">homepage</a> or refreshing the page.</p>
+        <h1>Oops! Something Went Wrong</h1>
+        <p>We're sorry, but an unexpected error occurred while processing your request.</p>
+        <p>Our technical team has been notified and we're working to fix it.</p>
 
-        <div class="error-details" id="errorMessage">
-            </div>
+        <div class="error-details" id="errorMessage"></div>
 
-        <a href="index.html" class="back-button">Go to Homepage</a>
+        <div class="button-container">
+            <button class="btn btn-primary" id="homeButton">
+                <i class="fas fa-home"></i> Go to Homepage
+            </button>
+            <button class="btn btn-secondary" id="refreshButton">
+                <i class="fas fa-sync-alt"></i> Refresh Page
+            </button>
+        </div>
     </div>
 
     <script>
-        // Retrieve error message from localStorage if available
         document.addEventListener('DOMContentLoaded', function() {
             const errorMessageElement = document.getElementById('errorMessage');
             const storedError = localStorage.getItem('appError');
+            const homeButton = document.getElementById('homeButton');
+            const refreshButton = document.getElementById('refreshButton');
 
+            // Display error message if available
             if (storedError) {
-                errorMessageElement.textContent = `Error Details: ${storedError}`;
-                localStorage.removeItem('appError'); // Clear the error after displaying
+                errorMessageElement.textContent = `Error Details:\n${storedError}`;
+                localStorage.removeItem('appError');
             } else {
-                errorMessageElement.style.display = 'none'; // Hide if no error details
+                errorMessageElement.style.display = 'none';
             }
+
+            // Button event listeners
+            homeButton.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            refreshButton.addEventListener('click', () => {
+                window.location.reload();
+            });
+
+            // Add a subtle hover effect to the container
+            const container = document.querySelector('.error-container');
+            container.addEventListener('mouseenter', () => {
+                container.style.transform = 'translateY(-5px)';
+                container.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                container.style.transform = 'translateY(0)';
+                container.style.boxShadow = 'var(--shadow-lg)';
+            });
         });
     </script>
-    <script src="/JS/main.js"></script>
 </body>
 </html>

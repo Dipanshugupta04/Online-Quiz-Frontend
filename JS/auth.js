@@ -336,6 +336,7 @@ if (document.getElementById("loginForm")) {
         });
 
         const data = await response.json();
+        console.log(data)
 
         if (!response.ok) {
           throw new Error(data.message || "Login failed");
@@ -346,6 +347,7 @@ if (document.getElementById("loginForm")) {
         submitBtn.style.backgroundColor = "#1dd1a1";
 
         // Store the token and user data
+        localStorage.setItem("email",data.email);
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("unique_id", data.unique_id);
         localStorage.setItem("user", JSON.stringify({ name: data.user }));
@@ -408,6 +410,9 @@ function handleCredentialResponse(response) {
     .then((response) => response.json())
 
     .then((data) => {
+      if(data.email){
+        localStorage.setItem("email",data.email);
+      }
       console.log(data);
       if (data.jwt && (data.user || data.unique_id)) {
         console.log("JWT:", data.jwt);
