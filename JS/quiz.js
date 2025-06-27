@@ -250,7 +250,7 @@ console.log(authToken)
         if (userData) {
             try {
                 const user = JSON.parse(userData);
-                const name = user.name || user.username || "User";
+                const name = user.name || user.username || user || "User";
                 userNameSpan.textContent = `Welcome, ${name}`;
             } catch (error) {
                 window.location.href='error.html';
@@ -303,7 +303,8 @@ console.log(authToken)
         localStorage.removeItem("authToken");
         localStorage.removeItem("user");
         localStorage.removeItem("unique_id");
-        
+        localStorage.removeItem("email");
+    
         // Redirect to login page
         window.location.href = '/HTML/login.html';
     }

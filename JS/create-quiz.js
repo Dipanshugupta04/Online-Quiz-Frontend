@@ -417,6 +417,7 @@ function performLogout() {
   localStorage.removeItem("authToken");
   localStorage.removeItem("rememberedEmail");
   localStorage.removeItem("user");
+  localStorage.removeItem("email");
   localStorage.removeItem("examId");
   localStorage.removeItem("examName");
   localStorage.removeItem("unique_id");

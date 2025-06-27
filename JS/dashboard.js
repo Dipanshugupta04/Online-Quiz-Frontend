@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (userData) {
     try {
       const user = JSON.parse(userData);
-      const name = user.name || user.username || user.fullName || "User";
+      const name = user.name || user.username || user.fullName || user || "User";
       userNameSpan.textContent = `Welcome, ${name}`;
     } catch (error) {
       console.error("Failed to parse user data:", error);
@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("rememberedEmail");
     localStorage.removeItem("user");
     localStorage.removeItem("examId");
+    localStorage.removeItem("email");
     localStorage.removeItem("examName");
     localStorage.removeItem("unique_id");
     window.location.href = "/HTML/index.html";

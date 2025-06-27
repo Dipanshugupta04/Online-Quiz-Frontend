@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const user = JSON.parse(userData);
   
           const name =
-            user.name || user.username || user.fullName || user.user || "User";
+            user.name || user.username || user.fullName || user.user ||user ||  "User";
             
           // Safely handle potentially missing elements
           if (authButtons) authButtons.style.display = "none";
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("user");
       localStorage.removeItem("currentUser");
       localStorage.removeItem("username");
+      localStorage.removeItem("email");
     }
   
     // Initialize auth status
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("rememberedEmail");
       localStorage.removeItem("user");
       localStorage.removeItem("examId");
+      localStorage.removeItem("email");
       localStorage.removeItem("examName");
       localStorage.removeItem("unique_id");
       window.location.href = "/HTML/index.html";

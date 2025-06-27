@@ -149,6 +149,7 @@ function setupEventListeners() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
         localStorage.removeItem('unique_id');
+        localStorage.removeItem("email");
         window.location.href = 'login.html';
     });
 }
@@ -159,7 +160,7 @@ function loadUserData() {
     if (userData) {
         try {
             const user = JSON.parse(userData);
-            navUsername.textContent = `Welcome, ${user.name || user.username || 'User'}`;
+            navUsername.textContent = `Welcome, ${user.name || user.username || user || 'User'}`;
         } catch (e) {
             window.location.href='error.html';
             console.error('Error parsing user data:', e);

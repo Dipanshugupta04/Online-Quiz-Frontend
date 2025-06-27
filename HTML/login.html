@@ -1,103 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | QuizWiz</title>
-  <link rel="stylesheet" href="/CSS/auth.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
-<body>
-  <div class="blob-container">
-    <div class="blob"></div>
-    <div class="blob"></div>
-  </div>
-
-  <div class="auth-container">
-    <div class="logo">
-      <i class="fas fa-brain"></i>
-      <span>QuizWiz</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | QuizWiz</title>
+    <link rel="stylesheet" href="/CSS/auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <div class="blob-container">
+      <div class="blob"></div>
+      <div class="blob"></div>
     </div>
 
-    <h1>Welcome Back!</h1>
-    <p class="subtitle">Login to continue your quiz journey</p>
-
-    <form id="loginForm">
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input
-          type="email"
-          name="email"
-          id="loginEmail"
-          placeholder="Enter your Email"
-          required
-        />
+    <div class="auth-container">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <span>QuizWiz</span>
       </div>
 
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input
-          type="password"
-          name="password"
-          id="loginPassword"
-          placeholder="Enter your Password"
-          required
-        />
-        <i class="fas fa-eye toggle-password"></i>
+      <h1>Welcome Back!</h1>
+      <p class="subtitle">Login to continue your quiz journey</p>
+
+      <form id="loginForm">
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            name="email"
+            id="loginEmail"
+            placeholder="Enter your Email"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            id="loginPassword"
+            placeholder="Enter your Password"
+            required
+          />
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+
+        <div class="options">
+          <label>
+            <input type="checkbox" name="remember" required /> Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <span>Login</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>or continue with</span>
       </div>
 
-      <div class="options">
-        <label>
-          <input type="checkbox" name="remember" required /> Remember me
-        </label>
-        <a href="#" class="forgot-password">Forgot password?</a>
+      <div class="social-login">
+        <!-- Replace Google button with Google Identity Services button -->
+        <div
+          id="g_id_onload"
+          data-client_id="693476049740-se2qqteroh0pk7etb58q18s467uggj1k.apps.googleusercontent.com"
+          data-callback="handleCredentialResponse"
+          data-auto_prompt="false"
+        ></div>
+        <div class="g_id_signin" data-type="standard"></div>
+
+        <!-- Keep GitHub button as-is -->
+        <button type="button" class="github-btn" id="githubLoginBtn">
+          <i class="fab fa-github"></i> GitHub
+        </button>
       </div>
 
-      <button type="submit" class="login-btn">
-        <span>Login</span>
-        <i class="fas fa-arrow-right"></i>
-      </button>
-    </form>
-
-    <div class="divider">
-      <span>or continue with</span>
+      <p class="signup-link">
+        Don't have an account? <a href="signup.html">Sign Up</a>
+      </p>
     </div>
 
-    <div class="social-login">
-      <!-- Replace Google button with Google Identity Services button -->
-      <div
-        id="g_id_onload"
-        data-client_id="693476049740-se2qqteroh0pk7etb58q18s467uggj1k.apps.googleusercontent.com"
-        data-callback="handleCredentialResponse"
-        data-auto_prompt="false"
-      ></div>
-      <div class="g_id_signin" data-type="standard"></div>
+    <!-- Google Sign-In Callback (must define this in your JS) -->
+    <script>
+      function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        // Handle the Google Sign-In response as needed here
+      }
 
-      <!-- Keep GitHub button as-is -->
-      <button type="button" class="github-btn">
-        <i class="fab fa-github"></i>
-        GitHub
-      </button>
-    </div>
+      // ===== GitHub OAuth Configuration =====
 
-    <p class="signup-link">
-      Don't have an account? <a href="signup.html">Sign Up</a>
-    </p>
-  </div>
+      const githubClientId = "Ov23liFykPSWPHAdplg6";
+      const redirectUri = "http://localhost:5502/HTML/login.html";
 
-  <!-- Google Sign-In Callback (must define this in your JS) -->
-  <script>
-    function handleCredentialResponse(response) {
-      console.log("Encoded JWT ID token: " + response.credential);
-      // Handle the Google Sign-In response as needed here
-    }
-  </script>
+      function startGitHubLogin() {
+        const scope = "read:user user:email";
+        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${encodeURIComponent(
+          redirectUri
+        )}&scope=${scope}`;
+        window.location.href = githubAuthUrl;
+      }
 
-  <script src="/JS/auth.js"></script>
-</body>
+      async function handleGitHubCallback() {
+        console.log("Handling GitHub callback...");
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+        console.log(code);
+        const error = urlParams.get("error");
+
+        if (error) {
+          console.error("GitHub OAuth error:", error);
+          window.location.href =
+            "login.html?error=" + encodeURIComponent(error);
+          return;
+        }
+
+        if (!code) {
+          console.log("No authorization code received");
+          return;
+        }
+
+        console.log("Received authorization code:", code);
+
+        try {
+          console.log("Attempting to exchange code for token...");
+
+          const response = await fetch("http://localhost:8081/auth/github", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ code }),
+          });
+
+          console.log("Response status:", response.status);
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Server responded with error:", errorText);
+            throw new Error(errorText || "Authentication failed");
+          }
+
+          const data = await response.json();
+          console.log("Token exchange successful. Data:", data);
+          if (data.user) {
+            const name=JSON.stringify(data.user)
+            console.log("Token exchange successful. Dataname:", name);
+            localStorage.setItem("user",name);
+          }
+
+          if (data.jwt) {
+            console.log("Storing JWT and user data...");
+            localStorage.setItem("authToken", data.jwt);
+            localStorage.setItem("email", data.email);
+
+            if (data.unique_id) {
+              localStorage.setItem("unique_id", data.unique_id);
+            }
+            console.log("Redirecting to index.html...");
+            window.location.href = "index.html";
+          } else {
+            throw new Error(
+              data.message || "Authentication failed - no token received"
+            );
+          }
+        } catch (error) {
+          console.error("Error during token exchange:", error);
+          window.location.href =
+            "login.html?error=" + encodeURIComponent(error.message);
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded. Initializing GitHub auth...");
+
+        // Add click handler for GitHub button
+        const githubBtn = document.getElementById("githubLoginBtn");
+        if (githubBtn) {
+          githubBtn.addEventListener("click", startGitHubLogin);
+        }
+
+        // Handle callback if we're on the login page
+        if (window.location.search.includes("code=")) {
+          handleGitHubCallback();
+        }
+      });
+    </script>
+
+    <script src="/JS/auth.js"></script>
+  </body>
 </html>

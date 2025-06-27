@@ -14,17 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (userData) {
       try {
+        console.log(userData);
         const user = JSON.parse(userData);
+        console.log(user)
 
         const name =
-          user.name || user.username || user.fullName || user.user || "User";
+          user.name || user.username || user.fullName || user.user || user || "User";
         authButtons.style.display = "none";
         userSection.style.display = "flex";
         navUsername.textContent = `Welcome, ${name}`;
       } catch (e) {
-        window.location.href='error.html';
+        // window.location.href='error.html';
         console.error("Error parsing user data:", e);
-        clearUserData();
+        // clearUserData();
         showAuthButtons();
       }
     } else {
@@ -314,6 +316,7 @@ function getTokenExpiration(token) {
   localStorage.removeItem("currentQuizId");
   localStorage.removeItem("examId");
   localStorage.removeItem("examName");
+  localStorage.removeItem("email");
   }
   
   try {
@@ -348,6 +351,8 @@ localStorage.removeItem("quizDraft");
 localStorage.removeItem("roomid");
 localStorage.removeItem("unique_id");
 localStorage.removeItem("user");
+localStorage.removeItem("email");
+
   // Use replaceState before redirect to prevent navigation issues
   window.history.replaceState(null, "", window.location.href);
   

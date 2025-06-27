@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const user = JSON.parse(userData);
   
           const name =
-            user.name || user.username || user.fullName || user.user || "User";
+            user.name || user.username || user.fullName || user.user || user || "User";
           authButtons.style.display = "none";
           userSection.style.display = "flex";
           navUsername.textContent = `Welcome, ${name}`;
@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("user");
       localStorage.removeItem("currentUser");
       localStorage.removeItem("username");
+      localStorage.removeItem("email");
     }
   
     // Initialize auth status
@@ -54,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("examId");
       localStorage.removeItem("examName");
       localStorage.removeItem("unique_id");
+      localStorage.removeItem("email");
       // Remove other keys if needed
       window.location.href = "/HTML/index.html";
     }
