@@ -421,7 +421,7 @@ function performLogout() {
   localStorage.removeItem("examId");
   localStorage.removeItem("examName");
   localStorage.removeItem("unique_id");
-  window.location.href = "/HTML/index.html";
+  window.location.href = "/index.html";
 }
 
 const logoutBtn = document.getElementById("logoutBtn");

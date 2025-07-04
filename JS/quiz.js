@@ -306,7 +306,7 @@ console.log(authToken)
         localStorage.removeItem("email");
     
         // Redirect to login page
-        window.location.href = '/HTML/login.html';
+        window.location.href = '/login.html';
     }
 
     function showError(message) {

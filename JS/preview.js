@@ -20,7 +20,7 @@ const unique_id = localStorage.getItem("unique_id");
 // Initialize the page
 async function init() {
     if (!authToken || !unique_id) {
-        window.location.href = '/HTML/login.html';
+        window.location.href = '/login.html';
         return;
     }
 

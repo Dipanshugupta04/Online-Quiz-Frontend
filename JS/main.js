@@ -8,7 +8,7 @@ window.onerror = function(message, source, lineno, colno, error) {
     localStorage.setItem('appError', errorMessage);
 
     // Redirect to your custom error page
-    window.location.href = '/HTML/error.html'; // Adjust the path if necessary
+    window.location.href = '/error.html'; // Adjust the path if necessary
 
     return true; // Prevents the default browser error handling
 };
@@ -20,7 +20,7 @@ window.addEventListener('unhandledrejection', (event) => {
     const errorMessage = event.reason ? event.reason.toString() : 'An unhandled promise rejection occurred.';
     localStorage.setItem('appError', errorMessage);
 
-    window.location.href = '/HTML/error.html'; // Adjust the path if necessary
+    window.location.href = '/error.html'; // Adjust the path if necessary
 });
 
 // Example of how to trigger an error for testing (remove this in production)

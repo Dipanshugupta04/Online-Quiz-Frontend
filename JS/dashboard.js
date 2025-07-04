@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!token) {
         alert("Please login first");
-        window.location.href = "/HTML/login.html";
+        window.location.href = "/login.html";
         return;
       }
       const uniqueId=localStorage.getItem('unique_id');
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("email");
     localStorage.removeItem("examName");
     localStorage.removeItem("unique_id");
-    window.location.href = "/HTML/index.html";
+    window.location.href = "/index.html";
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
