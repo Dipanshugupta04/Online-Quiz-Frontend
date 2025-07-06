@@ -346,6 +346,7 @@
                 <i class="fas fa-users"></i>
                 <span id="participantCount"></span> participants
             </div>
+            <div id="timer"><i class="fa-solid fa-clock"></i>Time Remaining: <span id="timeDisplay"></span></div>
             <div class="question-container" id="questionContainer"></div>
             <div class="quiz-controls">
                 <button id="prevQuestion" disabled>
@@ -640,6 +641,11 @@
 
 
 
+
+    
+
+
+
         // Submit quiz function
         async function submitQuiz() {
             const submitBtn = document.getElementById('submitQuiz');
@@ -718,10 +724,54 @@
             }
         }
 
+
+
+        //Auto Submited
+        const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+        const durationtime = quizData?.durationTime;
+
+        window.addEventListener("DOMContentLoaded", () => {
+         
+  const durationMinutes =durationtime; // Example: get this from backend
+  let timeLeft = durationMinutes * 60; // in seconds
+
+  const timerDisplay = document.getElementById("timeDisplay");
+  const examForm = document.getElementById("examForm");
+
+  const timerInterval = setInterval(() => {
+   
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      
+      autoSubmitExam();
+    } else {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${padZero(minutes)}:${padZero(seconds)}`;
+      timeLeft--;
+      if (timeLeft === 10 || !alerted10Sec) {
+            showNotification("⏰ Only 10 seconds left! Hurry up!");
+            alerted10Sec = true;
+        }
+    }
+  }, 1000);
+
+  function padZero(num) {
+    return num < 10 ? '0' + num : num;
+  }
+
+  function autoSubmitExam() {
+    // alert("⏰ Time is up! Submitting your exam...");
+   // or send answers via fetch() to backend
+   submitQuiz() ;
+  }
+});
+
+
         // Leave quiz function
         document.getElementById('leaveQuiz').addEventListener('click', async () => {
             if (confirm('Are you sure you want to leave the quiz? Your unsaved answers will be lost.')) {
-                const userEmail = localStorage.getItem('userEmail'); // Assuming user's email is stored here
+                const userEmail = localStorage.getItem('email'); // Assuming user's email is stored here
                 const authToken = localStorage.getItem('authToken');
 
                 if (!userEmail) {
@@ -733,10 +783,16 @@
                 const leaveBtn = document.getElementById('leaveQuiz');
                 leaveBtn.disabled = true;
                 leaveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Leaving...';
+                
 
                 try {
-                    if (userEmail) { // Only try to hit API if email is available
-                        const response = await fetch(`http://localhost:8081/api/participants/leave/${userEmail}`, {
+                    const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+                    const roomCode = quizData?.quizCode;
+                    
+
+                
+                    if (roomCode) { // Only try to hit API if email is available
+                        const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -774,6 +830,42 @@
                 }
             }
         });
+
+
+
+ //Fetch Participent 
+ const quizdata = JSON.parse(sessionStorage.getItem('quizData'));
+ const roomCode = quizdata?.quizCode;
+  const authToken = localStorage.getItem("authToken"); // Or however you store your JWT
+
+  async function fetchParticipantCount() {
+    try {
+      const response = await fetch(`http://localhost:8081/quiz/participants/count/${roomCode}`, {
+        headers: {
+          'Authorization': `Bearer ${authToken}`
+        }
+      });
+
+      if (!response.ok) {
+        console.warn('Failed to fetch participant count');
+        return;
+      }
+
+      const data = await response.json();
+      document.getElementById('participantCount').textContent = data.count || 0;
+
+    } catch (err) {
+      console.error("Error fetching participant count:", err);
+    }
+  }
+
+  // Initial call
+  fetchParticipantCount();
+
+  // Fetch every 10 seconds
+  setInterval(fetchParticipantCount, 2000);
+
+
     </script>
 </body>
 </html>

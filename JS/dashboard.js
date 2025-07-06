@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const newCopyLinkBtn = copyLinkBtn.cloneNode(true);
       copyLinkBtn.parentNode.replaceChild(newCopyLinkBtn, copyLinkBtn);
       newCopyLinkBtn.addEventListener("click", function () {
-        navigator.clipboard.writeText(`quizmaster.pro/quiz/${roomCode}`);
+        navigator.clipboard.writeText(`${roomCode}`);
         showToast("Link copied to clipboard!", "success");
       });
 

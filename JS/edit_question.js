@@ -274,9 +274,23 @@ async function updateQuiz(roomId) {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to update quiz');
+            let errorText = 'Failed to update quiz';
+        
+            // Attempt to read as text only once
+            const errorBody = await response.text();
+        
+            try {
+                const errorData = JSON.parse(errorBody); // Try to parse as JSON
+                errorText = errorData.message || errorText;
+            } catch (e) {
+                // If it's not JSON, keep plain text
+                errorText = errorBody || errorText;
+            }
+        
+            throw new Error(errorText);
         }
+        
+        
 
         alert('Quiz updated successfully!');
         localStorage.removeItem('quizDraft');

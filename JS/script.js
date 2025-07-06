@@ -427,41 +427,81 @@ async function joinQuiz() {
     }
 
     try {
-        const response = await fetch('http://localhost:8081/quiz/join-room', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({ roomCode: quizCode, email: email })
-        });
+      const response = await fetch('http://localhost:8081/quiz/join-room', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ roomCode: quizCode, email: email })
+      });
+  
+      const data = await response.json();
+      
+      console.log(data);
+      console.log(data.durationTime);
+  
+      if (data.status === 'success') {
+          const quizStartDate = data.startdate; // e.g., "2025-07-09"
+          const today = new Date().toISOString().split('T')[0]; 
+          // today's date in "YYYY-MM-DD"
+  console.log(today);
+  console.log(quizStartDate);
+          if (quizStartDate == today) {
+              currentUser = {
+                  name: data.participantName,
+                  email: email
+              };
+  
+              sessionStorage.setItem('quizData', JSON.stringify({
+                  quiz: data.quiz,
+                  quizCode: quizCode,
+                  user: currentUser,
+                  durationTime:data.durationTime
+              }));
+  
+              window.location.href = 'quiz.html';
+          } else {
+            
+              alert(`This quiz is scheduled for ${quizStartDate}, not today (${today}).`);
+              
+              const email=localStorage.getItem('email');
+              const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+              const roomCode = quizData?.quizCode;
 
-        const data = await response.json();
-        console.log(data);
+              try {
+                if (roomCode) { // Only try to hit API if email is available
+                    const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authToken}` // Include auth token
+                        }
+                    });
 
-        if (data.status === 'success') {
-            currentUser = {
-                name: data.participantName,
-                email: email
-            };
-
-            // Store quiz data in session storage to pass to new page
-            sessionStorage.setItem('quizData', JSON.stringify({
-                quiz: data.quiz,
-                quizCode: quizCode,
-                user: currentUser
-            }));
-
-            // Open new page with quiz
-            window.location.href = 'quiz.html';
-
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to join quiz');
-    }
+                    if (response.ok) {
+                        showNotification('Successfully left the quiz room.');
+                    } else {
+                        const errorData = await response.text();
+                        showError('Failed to notify server of departure: ' + errorData);
+                        console.error('Server response on leaving quiz:', errorData);
+                    }
+                } else {
+                    showNotification('Leaving quiz locally (email not found for server notification).');
+                }
+            } catch (error) {
+                console.error('Error hitting leave API:', error);
+                showError('Network issue while leaving. Disconnecting locally.');
+            }
+          }
+      } else {
+          alert(data.message);
+      }
+  } catch (error) {
+      console.error("Error joining room:", error);
+      alert("Something went wrong while joining the quiz.");
+  }
+  
 }
 const token=localStorage.getItem('authToken');
 // Button listener

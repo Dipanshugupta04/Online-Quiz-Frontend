@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Quiz Challenge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cosmic-purple: #6a00ff;
+            --neon-blue: #00f5ff;
+            --plasma-pink: #ff00e4;
+            --void-black: #0a0a12;
+            --star-white: #f0f0ff;
+            --warning-orange: #ff8c00;
+            --success-green: #00ff88;
+            --galaxy-gradient: linear-gradient(135deg, #1a0033 0%, #0d0221 100%);
+            --nebula-gradient: linear-gradient(45deg, #6a00ff, #ff00e4, #00f5ff);
+            --glow-effect: 0 0 10px var(--neon-blue), 0 0 20px rgba(0, 245, 255, 0.5);
+            --transition-smooth: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--galaxy-gradient);
+            color: var(--star-white);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.7"/></svg>') repeat;
+            opacity: 0.3;
+            z-index: -1;
+            animation: twinkle 5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.5; }
+        }
+
+        .quiz-container {
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(106, 0, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
+                        inset 0 0 20px rgba(106, 0, 255, 0.2);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .quiz-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--nebula-gradient);
+            opacity: 0.1;
+            z-index: -1;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: var(--glow-effect);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--nebula-gradient);
+            border-radius: 3px;
+        }
+
+        .loading-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+            min-height: 300px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(106, 0, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--neon-blue);
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 25px;
+            position: relative;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .loading-spinner::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 3px solid rgba(255, 0, 228, 0.2);
+            border-radius: 50%;
+            animation: spin-reverse 2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+            to { transform: rotate(-360deg); }
+        }
+
+        .question-container {
+            margin: 30px 0;
+            display: none;
+            animation: cosmicFadeIn 0.8s ease-out;
+        }
+
+        @keyframes cosmicFadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .question {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .question h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--plasma-pink);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+
+        .question p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--neon-blue);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option {
+            position: relative;
+            padding: 18px;
+            border: 2px solid rgba(106, 0, 255, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            background: rgba(20, 20, 40, 0.5);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--nebula-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(106, 0, 255, 0.3);
+            border-color: var(--neon-blue);
+        }
+
+        .option.selected {
+            border-color: var(--plasma-pink);
+            background: rgba(255, 0, 228, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 228, 0.3);
+        }
+
+        .option.selected::before {
+            opacity: 0.1;
+        }
+
+        .option input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            margin-right: 15px;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option input[type="radio"]::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--plasma-pink);
+            transform: scale(0);
+            transition: var(--transition-smooth);
+        }
+
+        .option input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: 'Orbitron', sans-serif;
+            padding: 15px 25px;
+            background: transparent;
+            color: white;
+            border: 2px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-bounce);
+            flex: 1;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--nebula-gradient);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        button:hover::before {
+            opacity: 0.7;
+        }
+
+        button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.3);
+            border-color: transparent;
+        }
+
+        button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        #prevQuestion {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        #nextQuestion {
+            border-color: var(--plasma-pink);
+            color: var(--plasma-pink);
+        }
+
+        #submitQuiz {
+            border-color: var(--success-green);
+            color: var(--success-green);
+        }
+
+        #leaveQuiz {
+            border-color: var(--warning-orange);
+            color: var(--warning-orange);
+        }
+
+        /* Cosmic Timer */
+        .cosmic-timer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+            z-index: 10;
+        }
+
+        .cosmic-timer i {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cosmic-timer.warning {
+            color: var(--warning-orange);
+            border-color: var(--warning-orange);
+            animation: pulseWarning 1s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 140, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 140, 0, 0.8); }
+        }
+
+        /* Floating planets decoration */
+        .planet-decoration {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .planet-1 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #6a00ff, transparent 70%);
+            top: -50px;
+            left: -50px;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .planet-2 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 70% 30%, #ff00e4, transparent 70%);
+            bottom: -75px;
+            right: -75px;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10px, 10px); }
+            50% { transform: translate(0, 20px); }
+            75% { transform: translate(-10px, 10px); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--plasma-pink);
+            opacity: 0;
+            z-index: 1000;
+            animation: confetti-fall 5s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating planet decorations -->
+    <div class="planet-decoration planet-1"></div>
+    <div class="planet-decoration planet-2"></div>
+
+    <div class="quiz-container" id="quizContainer">
+        <div class="cosmic-timer" id="quizTimer">
+            <i class="fas fa-clock"></i>
+            <span id="timeDisplay">00:00</span>
+        </div>
+        
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loading-spinner"></div>
+            <h3>Initializing Cosmic Connection...</h3>
+            <p>Establishing quantum link to quiz server</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div id="quizContent" style="display: none;">
+            <h2 id="quizTitle">Cosmic Knowledge Challenge</h2>
+            
+            <div class="question-container" id="questionContainer"></div>
+            
+            <div class="quiz-controls">
+                <button id="prevQuestion" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button id="nextQuestion">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button id="submitQuiz">
+                    <i class="fas fa-paper-plane"></i> Warp Submit
+                </button>
+                <button id="leaveQuiz">
+                    <i class="fas fa-sign-out-alt"></i> Emergency Exit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.2/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        // Cosmic quiz variables
+        let stompClient = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswers = {};
+        let quiz = null;
+        let quizCode = '';
+        let timerInterval = null;
+        let confettiInterval = null;
+
+        // Initialize the cosmic quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate loading animation
+            simulateLoading();
+            
+            // Get quiz data from session storage
+            const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+            console.log("Quiz Data from session:", quizData);
+
+            if (!quizData) {
+                showError('No quiz data detected. Redirecting to home planet...');
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                return;
+            }
+
+            quiz = quizData.quiz;
+            quizCode = quizData.quizCode;
+
+            // Initialize WebSocket connection
+            connect(quizCode);
+
+            // After loading completes
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('quizContent').style.display = 'block';
+
+                if (quiz.questions && quiz.questions.length > 0) {
+                    document.getElementById('quizTitle').textContent = quiz.title || "Cosmic Knowledge Challenge";
+                    displayQuestion(quiz.questions[0], 0, quiz.questions.length);
+                    startCountdown(quiz.duration || 300); // Default 5 minutes
+                }
+            }, 3000);
+        });
+
+        // Simulate loading with progress bar
+        function simulateLoading() {
+            const progressFill = document.createElement('div');
+            progressFill.className = 'progress-fill';
+            document.querySelector('.progress-bar').appendChild(progressFill);
+            
+            let width = 0;
+            const loadingInterval = setInterval(() => {
+                width += Math.random() * 10;
+                progressFill.style.width = `${Math.min(width, 100)}%`;
+                if (width >= 100) {
+                    clearInterval(loadingInterval);
+                }
+            }, 200);
+        }
+
+        // WebSocket connection with cosmic theme
+        function connect(roomCode) {
+            const socket = new SockJS('http://localhost:8081/ws');
+            stompClient = Stomp.over(socket);
+            
+            // Add cosmic connection effect
+            const connectionEffect = document.createElement('div');
+            connectionEffect.className = 'connection-effect';
+            document.body.appendChild(connectionEffect);
+
+            stompClient.connect({}, function (frame) {
+                console.log('Connected to cosmic channel: ' + frame);
+                connectionEffect.remove();
+
+                // Subscribe to quiz updates
+                stompClient.subscribe('/topic/quiz/' + roomCode, function (message) {
+                    const quizUpdate = JSON.parse(message.body);
+                    handleCosmicUpdate(quizUpdate);
+                });
+
+                // Subscribe to participant updates
+                stompClient.subscribe('/topic/room/' + roomCode + '/participants', function (message) {
+                    const data = JSON.parse(message.body);
+                    updateParticipants(data);
+                });
+                
+                // Play connection sound effect (simulated)
+                playSoundEffect('connect');
+            }, function(error) {
+                console.error('Cosmic link failure:', error);
+                showError('Quantum link unstable. Reconnecting...');
+                setTimeout(() => connect(roomCode), 5000);
+            });
+        }
+
+        // Display question with cosmic effects
+        function displayQuestion(question, index, total) {
+            document.getElementById('questionContainer').style.display = 'none';
+
+            setTimeout(() => {
+                const container = document.getElementById('questionContainer');
+                container.innerHTML = `
+                    <div class="question">
+                        <h3>Question ${index + 1} of ${total}</h3>
+                        <p>${question.text}</p>
+                        <div class="options" id="optionsContainer"></div>
+                    </div>
+                `;
+
+                const optionsContainer = document.getElementById('optionsContainer');
+                question.options.forEach((option, i) => {
+                    const optionId = `option-${question.id}-${i}`;
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.innerHTML = `
+                        <input type="radio"
+                               name="question-${question.id}"
+                               id="${optionId}"
+                               value="${option.id}"
+                               ${selectedAnswers[question.id] === option.id ? 'checked' : ''}>
+                        <label for="${optionId}">${option.text}</label>
+                    `;
+
+                    // Make the entire div clickable
+                    optionElement.addEventListener('click', () => {
+                        const radio = optionElement.querySelector('input[type="radio"]');
+                        radio.checked = true;
+                        selectedAnswers[question.id] = radio.value;
+                        updateOptionSelection(question.id);
+                        playSoundEffect('select');
+                    });
+
+                    optionsContainer.appendChild(optionElement);
+                });
+
+                // Update navigation buttons
+                document.getElementById('prevQuestion').disabled = index === 0;
+                document.getElementById('nextQuestion').disabled = index === total - 1;
+                document.getElementById('submitQuiz').style.display = index === total - 1 ? 'flex' : 'none';
+
+                document.getElementById('questionContainer').style.display = 'block';
+                animateQuestionAppear();
+            }, 300);
+        }
+
+        // Update option selection visuals
+        function updateOptionSelection(questionId) {
+            const options = document.querySelectorAll(`.option`);
+            options.forEach(option => {
+                option.classList.remove('selected');
+                const radio = option.querySelector('input[type="radio"]');
+                if (radio && radio.checked) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        // Animate question appearance
+        function animateQuestionAppear() {
+            const question = document.querySelector('.question');
+            question.style.animation = 'none';
+            setTimeout(() => {
+                question.style.animation = 'cosmicFadeIn 0.8s ease-out';
+            }, 10);
+        }
+
+        // Handle cosmic updates
+        function handleCosmicUpdate(data) {
+            if (data.action === 'quiz_started') {
+                showNotification('Cosmic quiz initiated! Engage!', 'plasma-pink');
+                startCountdown(data.duration || 300);
+            } else if (data.action === 'quiz_ended') {
+                showNotification('Quiz sequence complete!', 'neon-blue');
+                clearInterval(timerInterval);
+                submitQuiz();
+            } else if (data.action === 'time_update') {
+                updateTimer(data.timeLeft);
+            }
+        }
+
+        // Start cosmic countdown
+        function startCountdown(durationInSeconds) {
+            let timeLeft = durationInSeconds;
+            updateTimer(timeLeft);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (document.getElementById('submitQuiz').style.display === 'flex') {
+                        submitQuiz();
+                    }
+                }
+            }, 1000);
+        }
+
+        // Update timer display with cosmic effects
+        function updateTimer(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            const timeDisplay = document.getElementById('timeDisplay');
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+            const timerElement = document.getElementById('quizTimer');
+            if (seconds <= 30) {
+                timerElement.classList.add('warning');
+                if (seconds <= 10) {
+                    // Add pulse effect for last 10 seconds
+                    timerElement.style.animation = 'pulseWarning 0.5s infinite';
+                }
+            } else {
+                timerElement.classList.remove('warning');
+                timerElement.style.animation = '';
+            }
+        }
+
+        // Show cosmic notification
+        function showNotification(message, type = 'neon-blue') {
+            const notification = document.createElement('div');
+            notification.className = 'cosmic-notification';
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'neon-blue' ? 'info-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            notification.style.borderColor = `var(--${type})`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'cosmicFadeOut 0.5s forwards';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Show error message
+        function showError(message) {
+            const error = document.createElement('div');
+            error.className = 'cosmic-error';
+            error.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(error);
+
+            setTimeout(() => {
+                error.style.animation = 'cosmicFadeOut 0.5s forwards';
+                setTimeout(() => error.remove(), 500);
+            }, 3000);
+        }
+
+        // Play sound effects (simulated with animations)
+        function playSoundEffect(type) {
+            // In a real implementation, you would play actual audio files
+            // This is a visual simulation of sound effects
+            const effect = document.createElement('div');
+            effect.className = `sound-effect ${type}`;
+            document.body.appendChild(effect);
+            
+            setTimeout(() => {
+                effect.remove();
+            }, 1000);
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            if (confettiInterval) clearInterval(confettiInterval);
+            
+            confettiInterval = setInterval(() => {
+                for (let i = 0; i < 10; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.animationDuration = `${3 + Math.random() * 4}s`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }
+            }, 100);
+            
+            setTimeout(() => {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }, 3000);
+        }
+
+        // Navigation event listeners
+        document.getElementById('prevQuestion').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion(quiz.questions[currentQuestionIndex], currentQuestionIndex, quiz.questions.length);
+                playSoundEffect('navigate');
+            }
+        });
+
+        document.getElementById('nextQuestion').addEventListener('click', () => {
+            if (currentQuestionIndex < quiz.questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(quiz.questions[currentQuestionIndex], currentQuestionIndex, quiz.questions.length);
+                playSoundEffect('navigate');
+            }
+        });
+
+        // Submit quiz function
+        async function submitQuiz() {
+            const submitBtn = document.getElementById('submitQuiz');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Warp Engaging...';
+
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const userEmail = localStorage.getItem('email');
+
+                if (!userEmail) {
+                    throw new Error('User identification not found in cosmic records');
+                }
+
+                const submission = {
+                    roomCode: quizCode,
+                    participantEmail: userEmail,
+                    answers: Object.entries(selectedAnswers).map(([questionId, optionId]) => ({
+                        questionId: questionId,
+                        selectedOptionId: optionId
+                    }))
+                };
+
+                const response = await fetch('http://localhost:8081/quiz/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`,
+                    },
+                    body: JSON.stringify(submission)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    createConfetti();
+                    showNotification('Quiz successfully transmitted!', 'success-green');
+                    
+                    // Display cosmic results
+                    const resultHtml = `
+                        <div class="cosmic-results">
+                            <h3>Mission Complete</h3>
+                            <div class="result-stars">
+                                ${'★'.repeat(data.score)}${'☆'.repeat(data.totalQuestions - data.score)}
+                            </div>
+                            <p>You scored <span class="highlight">${data.score}</span> out of <span class="highlight">${data.totalQuestions}</span></p>
+                            <p>Cosmic Accuracy: <span class="highlight">${Math.round((data.score / data.totalQuestions) * 100)}%</span></p>
+                            <button onclick="window.location.href='index.html'">
+                                <i class="fas fa-rocket"></i> Return to Home Base
+                            </button>
+                        </div>
+                    `;
+                    document.getElementById('quizContent').innerHTML = resultHtml;
+                    
+                    clearInterval(timerInterval);
+                    if (stompClient && stompClient.connected) {
+                        stompClient.disconnect();
+                    }
+                    sessionStorage.removeItem('quizData');
+                } else {
+                    throw new Error(data.message || 'Transmission failed');
+                }
+            } catch (error) {
+                console.error('Cosmic transmission error:', error);
+                showError(error.message || 'Failed to submit quiz. Try again, space cadet!');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Warp Submit';
+            }
+        }
+
+        // Leave quiz function
+        document.getElementById('leaveQuiz').addEventListener('click', async () => {
+            if (confirm('Abandon your cosmic mission? Unsaved data will be lost in the void.')) {
+                const userEmail = localStorage.getItem('email');
+                const authToken = localStorage.getItem('authToken');
+                const leaveBtn = document.getElementById('leaveQuiz');
+                leaveBtn.disabled = true;
+                leaveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Disengaging...';
+
+                try {
+                    const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+                    const roomCode = quizData?.quizCode;
+                    
+                    if (roomCode) {
+                        const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${authToken}`
+                            }
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.text();
+                            console.error('Cosmic departure error:', errorData);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Cosmic link error:', error);
+                } finally {
+                    if (stompClient && stompClient.connected) {
+                        stompClient.disconnect();
+                    }
+                    clearInterval(timerInterval);
+                    sessionStorage.removeItem('quizData');
+                    showNotification('Returning to home base...', 'warning-orange');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                }
+            }
+        });
+
+        // Auto-submit when time expires
+        window.addEventListener("DOMContentLoaded", () => {
+            const durationMinutes = 5; // Default duration
+            let timeLeft = durationMinutes * 60;
+
+            const timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                } else {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById("timeDisplay").textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
