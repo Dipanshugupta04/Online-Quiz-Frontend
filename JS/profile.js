@@ -326,6 +326,7 @@ card.innerHTML = `
 <div class="achievement-details">
 <h4>${item.quizTitle}</h4>
 <p>Score: ${item.score}%</p>
+<p>Marks: ${item.marks}</p>
 <span class="achievement-date">
 <i class="far fa-calendar-alt"></i> ${new Date(item.submittedAt).toLocaleDateString()}
 </span>

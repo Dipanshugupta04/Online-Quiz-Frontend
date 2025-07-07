@@ -304,46 +304,30 @@
     <div class="analytics-container">
       <div class="dashboard-header">
         <h1 class="dashboard-title">Your Quiz Analytics</h1>
-        <div class="time-filter">
-          <button class="active">Week</button>
-          <button>Month</button>
-          <button>Quarter</button>
-          <button>All Time</button>
-        </div>
+   
       </div>
 
       <div class="metrics-grid">
         <div class="metric-card">
           <div class="metric-title">Total Quizzes Taken</div>
-          <div class="metric-value">24</div>
-          <div class="metric-change positive">
-            <i class="fas fa-arrow-up"></i> 12% from last week
-          </div>
+          <div class="metric-value" id="quizzesTaken"></div>
+         
         </div>
 
         <div class="metric-card">
           <div class="metric-title">Average Score</div>
-          <div class="metric-value">82%</div>
-          <div class="metric-change positive">
-            <i class="fas fa-arrow-up"></i> 5% improvement
-          </div>
+          <div class="metric-value" id="avgScore"></div>
+          
         </div>
+        
+        
 
-        <div class="metric-card">
-          <div class="metric-title">Time Spent</div>
-          <div class="metric-value">6h 42m</div>
-          <div class="metric-change negative">
-            <i class="fas fa-arrow-down"></i> 2% less than last week
-          </div>
-        </div>
+       
 
         <div class="metric-card">
           <div class="metric-title">Streak</div>
-          <div class="metric-value">7 days</div>
-          <div class="metric-change positive">
-            <i class="fas fa-fire" style="color: var(--accent-color)"></i> Keep
-            it up!
-          </div>
+          <div class="metric-value"id="currentStreak">days</div>
+         
         </div>
       </div>
 
@@ -353,189 +337,97 @@
           <canvas id="performanceChart"></canvas>
         </div>
 
-        <div class="chart-card">
-          <h3 class="chart-title">Subject Mastery</h3>
-          <canvas id="subjectChart"></canvas>
-        </div>
-      </div>
+       
 
       <div class="recent-activity">
         <h3 class="activity-title">Recent Quiz Attempts</h3>
 
-        <div class="activity-item">
-          <div class="activity-icon">
-            <i class="fas fa-atom"></i>
-          </div>
-          <div class="activity-details">
-            <div class="activity-name">Science Fundamentals</div>
-            <div class="activity-time">Today, 10:45 AM • 15 questions</div>
-          </div>
-          <div class="activity-score">
-            92% <span class="badge badge-success">Excellent</span>
-          </div>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-icon">
-            <i class="fas fa-globe-europe"></i>
-          </div>
-          <div class="activity-details">
-            <div class="activity-name">World Geography</div>
-            <div class="activity-time">Yesterday, 4:30 PM • 20 questions</div>
-          </div>
-          <div class="activity-score">
-            78% <span class="badge badge-warning">Good</span>
-          </div>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-icon">
-            <i class="fas fa-calculator"></i>
-          </div>
-          <div class="activity-details">
-            <div class="activity-name">Advanced Mathematics</div>
-            <div class="activity-time">Yesterday, 2:15 PM • 25 questions</div>
-          </div>
-          <div class="activity-score">
-            65% <span class="badge badge-danger">Needs Work</span>
-          </div>
-        </div>
-
-        <div class="activity-item">
-          <div class="activity-icon">
-            <i class="fas fa-book"></i>
-          </div>
-          <div class="activity-details">
-            <div class="activity-name">Literature Review</div>
-            <div class="activity-time">2 days ago, 11:20 AM • 18 questions</div>
-          </div>
-          <div class="activity-score">
-            85% <span class="badge badge-success">Great</span>
-          </div>
-        </div>
+        
       </div>
     </div>
 
     <script>
-      // Initialize charts
-      document.addEventListener("DOMContentLoaded", function () {
-        // Performance Trend Chart
-        const performanceCtx = document
-          .getElementById("performanceChart")
-          .getContext("2d");
-        const performanceChart = new Chart(performanceCtx, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-            datasets: [
-              {
-                label: "Your Score",
-                data: [65, 72, 78, 75, 82, 85],
-                borderColor: "#6c5ce7",
-                backgroundColor: "rgba(108, 92, 231, 0.1)",
-                borderWidth: 3,
-                tension: 0.3,
-                fill: true,
-              },
-              {
-                label: "Average Score",
-                data: [68, 70, 72, 73, 75, 76],
-                borderColor: "#a29bfe",
-                backgroundColor: "rgba(162, 155, 254, 0.1)",
-                borderWidth: 2,
-                borderDash: [5, 5],
-                tension: 0.3,
-                fill: true,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
-              },
-              tooltip: {
-                mode: "index",
-                intersect: false,
-              },
-            },
-            scales: {
-              y: {
-                beginAtZero: false,
-                min: 50,
-                max: 100,
-                ticks: {
-                  callback: function (value) {
-                    return value + "%";
-                  },
-                },
-              },
-            },
-          },
-        });
+    
+    document.addEventListener("DOMContentLoaded", async function () {
+  const token = localStorage.getItem("authToken");
+  const performanceCtx = document.getElementById("performanceChart").getContext("2d");
 
-        // Subject Mastery Chart
-        const subjectCtx = document
-          .getElementById("subjectChart")
-          .getContext("2d");
-        const subjectChart = new Chart(subjectCtx, {
-          type: "doughnut",
-          data: {
-            labels: ["Science", "Math", "History", "Literature", "Geography"],
-            datasets: [
-              {
-                data: [92, 65, 78, 85, 74],
-                backgroundColor: [
-                  "#6c5ce7",
-                  "#fd79a8",
-                  "#00b894",
-                  "#fdcb6e",
-                  "#a29bfe",
-                ],
-                borderWidth: 0,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "right",
-              },
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    return context.label + ": " + context.raw + "%";
-                  },
-                },
-              },
-            },
-            cutout: "70%",
-          },
-        });
+  // Prepare labels for the last 5 complete months
+  const currentDate = new Date();
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        // Time filter buttons
-        const filterButtons = document.querySelectorAll(".time-filter button");
-        filterButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            filterButtons.forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-            // Here you would typically fetch new data based on the selected filter
-            console.log("Filter changed to:", this.textContent);
-          });
-        });
+  // Step 1: Generate last 5 full month names (excluding current month)
+  const last5Months = [];
+  for (let i = 5; i >= 1; i--) {
+    const d = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+    const month = monthNames[d.getMonth()];
+    last5Months.push(month);
+  }
 
-        // User dropdown functionality
-        const userSection = document.getElementById("userSection");
-        const userDropdown = document.getElementById("userDropdown");
+  try {
+    const response = await fetch("http://localhost:8081/profile/user/monthly-average", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-        if (userSection) {
-          userSection.addEventListener("click", function () {
-            userDropdown.classList.toggle("active");
-          });
+    if (!response.ok) throw new Error("Failed to fetch monthly average scores");
+
+    const result = await response.json(); // [{month, year, averageScore, count}, ...]
+
+    // Step 2: Build score list aligned with `last5Months`
+    const scoreMap = {}; // { "Feb": 75, ... }
+    result.forEach(entry => {
+      const monthIndex = new Date(`${entry.month} 1, 2025`).getMonth(); // from full caps
+      const monthShort = monthNames[monthIndex];
+      scoreMap[monthShort] = entry.averageScore || 0;
+    });
+
+    const scores = last5Months.map(m => scoreMap[m] || 0); // fallback to 0 if no data
+
+    // Step 3: Render chart
+    new Chart(performanceCtx, {
+      type: "line",
+      data: {
+        labels: last5Months,
+        datasets: [{
+          label: "Monthly Avg Score",
+          data: scores,
+          borderColor: "#6c5ce7",
+          backgroundColor: "rgba(108, 92, 231, 0.1)",
+          borderWidth: 3,
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          tooltip: { mode: "index", intersect: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 0,
+            max: 100,
+            ticks: {
+              callback: (value) => value + "%"
+            }
+          }
         }
-      });
+      }
+    });
+
+  } catch (error) {
+    console.error("Chart Error:", error);
+  }
+});
+
+
+
+
     </script>
     <script type="module" src="/JS/analytics.js"></script>
   </body>
