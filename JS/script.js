@@ -442,12 +442,15 @@ async function joinQuiz() {
       console.log(data.durationTime);
   
       if (data.status === 'success') {
+        // sessionStorage.setItem('quizCode');
           const quizStartDate = data.startdate; // e.g., "2025-07-09"
+          const quizEndDate = data.enddate; 
           const today = new Date().toISOString().split('T')[0]; 
           // today's date in "YYYY-MM-DD"
   console.log(today);
   console.log(quizStartDate);
-          if (quizStartDate == today) {
+  console.log("End Date:", quizEndDate);
+          if (today >= quizStartDate && today <= quizEndDate) {
               currentUser = {
                   name: data.participantName,
                   email: email
@@ -466,12 +469,14 @@ async function joinQuiz() {
               alert(`This quiz is scheduled for ${quizStartDate}, not today (${today}).`);
               
               const email=localStorage.getItem('email');
-              const quizData = JSON.parse(sessionStorage.getItem('quizData'));
-              const roomCode = quizData?.quizCode;
+              // const quizData = JSON.parse(sessionStorage.getItem('quizData'));
+              // const roomCode = quizData?.quizCode;
+              // const roomCode=sessionStorage.getItem('quizCode');
+              console.log(quizCode);
 
               try {
-                if (roomCode) { // Only try to hit API if email is available
-                    const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
+                if (quizCode) { // Only try to hit API if room code is available
+                    const response = await fetch(`http://localhost:8081/quiz/leave/${quizCode}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
@@ -499,7 +504,7 @@ async function joinQuiz() {
       }
   } catch (error) {
       console.error("Error joining room:", error);
-      alert("Something went wrong while joining the quiz.");
+      // alert("Something went wrong while joining the quiz.");
   }
   
 }
