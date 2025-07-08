@@ -418,14 +418,16 @@
                 console.log('Connected to WebSocket: ' + frame);
 
                 // Subscribe to quiz updates
-                stompClient.subscribe('/topic/quiz/' + roomCode, function (message) {
+                stompClient.subscribe('/topic/send/' + roomCode, function (message) {
                     const quizUpdate = JSON.parse(message.body);
+                    console.log(quizUpdate)
                     handleQuizUpdate(quizUpdate);
                 });
 
                 // Subscribe to participant updates
                 stompClient.subscribe('/topic/room/' + roomCode + '/participants', function (message) {
                     const data = JSON.parse(message.body);
+                    console.log(data)
                     updateParticipants(data);
                 });
             }, function(error) {
@@ -790,6 +792,9 @@
                     const roomCode = quizData?.quizCode;
                     
 
+
+                    
+
                 
                     if (roomCode) { // Only try to hit API if email is available
                         const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
@@ -804,6 +809,7 @@
                             showNotification('Successfully left the quiz room.');
                         } else {
                             const errorData = await response.text();
+                            
                             showError('Failed to notify server of departure: ' + errorData);
                             console.error('Server response on leaving quiz:', errorData);
                         }
