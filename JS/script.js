@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("examName");
     localStorage.removeItem("unique_id");
     // Remove other keys if needed
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   }
 
   logoutBtn?.addEventListener("click", function (e) {
@@ -68,11 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   loginBtn?.addEventListener("click", function (e) {
     e.preventDefault();
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
   });
   signupBtn?.addEventListener("click", function (e) {
     e.preventDefault();
-    window.location.href = "/signup.html";
+    window.location.href = "signup.html";
   });
 
   // Mobile menu toggle
@@ -427,7 +427,7 @@ async function joinQuiz() {
     }
 
     try {
-      const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/join-room', {
+      const response = await fetch('https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/join-room', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -476,7 +476,7 @@ async function joinQuiz() {
 
               try {
                 if (quizCode) { // Only try to hit API if room code is available
-                    const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${quizCode}`, {
+                    const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${quizCode}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.removeItem("examName");
         localStorage.removeItem("unique_id");
         localStorage.removeItem("email");
-        window.location.href = "/index.html";
+        window.location.href = "index.html";
     }
 
     if (logoutBtn) {
@@ -63,14 +63,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (loginBtn) {
         loginBtn.addEventListener("click", function (e) {
             e.preventDefault();
-            window.location.href = "/login.html";
+            window.location.href = "login.html";
         });
     }
 
     if (signupBtn) {
         signupBtn.addEventListener("click", function (e) {
             e.preventDefault();
-            window.location.href = "/signup.html";
+            window.location.href = "signup.html";
         });
     }
 

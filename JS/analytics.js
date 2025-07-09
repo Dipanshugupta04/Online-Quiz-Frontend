@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("email");
     localStorage.removeItem("examName");
     localStorage.removeItem("unique_id");
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   }
 
   if (logoutBtn) {
@@ -70,14 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
   if (loginBtn) {
     loginBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      window.location.href = "/login.html";
+      window.location.href = "login.html";
     });
   }
 
   if (signupBtn) {
     signupBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      window.location.href = "/signup.html";
+      window.location.href = "signup.html";
     });
   }
 
@@ -268,7 +268,7 @@ async function refreshUserHistory() {
   const historyContainer = document.querySelector(".quiz-history");
 
   try {
-    const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/history", {
+    const response = await fetch("https://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/history", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -333,7 +333,7 @@ async function refreshUserAchievements() {
     const recentContainer = document.querySelector(".recent-activity");
 
     try {
-      const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/user/achievements", {
+      const response = await fetch("https://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/achievements", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

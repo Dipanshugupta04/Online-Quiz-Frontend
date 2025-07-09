@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!token) {
         alert("Please login first");
-        window.location.href = "/login.html";
+        window.location.href = "login.html";
         return;
       }
       const uniqueId=localStorage.getItem('unique_id');
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
      
       console.log(payload)
-      const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/exam/create", {
+      const response = await fetch("https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/exam/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const roomResponse = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/generate-room/${examId}`, {
+      const roomResponse = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/generate-room/${examId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("email");
     localStorage.removeItem("examName");
     localStorage.removeItem("unique_id");
-    window.location.href = "/index.html";
+    window.location.href = "index.html";
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
