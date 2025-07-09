@@ -579,7 +579,7 @@
 
         // WebSocket connection with cosmic theme
         function connect(roomCode) {
-            const socket = new SockJS('http://localhost:8081/ws');
+            const socket = new SockJS('http://quizwiz.ap-south-1.elasticbeanstalk.com/ws');
             stompClient = Stomp.over(socket);
             
             // Add cosmic connection effect
@@ -846,7 +846,7 @@
                     }))
                 };
 
-                const response = await fetch('http://localhost:8081/quiz/submit', {
+                const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -907,7 +907,7 @@
                     const roomCode = quizData?.quizCode;
                     
                     if (roomCode) {
-                        const response = await fetch(`http://localhost:8081/quiz/leave/${roomCode}`, {
+                        const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${roomCode}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',

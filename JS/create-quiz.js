@@ -350,7 +350,7 @@ async function validateAndSubmitQuiz() {
     }
 
     // Create the quiz
-    const createResponse = await fetch("http://localhost:8081/quiz/create", {
+    const createResponse = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

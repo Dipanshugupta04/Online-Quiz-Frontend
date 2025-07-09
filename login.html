@@ -133,7 +133,7 @@
         try {
           console.log("Attempting to exchange code for token...");
 
-          const response = await fetch("http://localhost:8081/auth/github", {
+          const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/auth/github", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
      
       console.log(payload)
-      const response = await fetch("http://localhost:8081/quiz/exam/create", {
+      const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/exam/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const roomResponse = await fetch(`http://localhost:8081/quiz/generate-room/${examId}`, {
+      const roomResponse = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/generate-room/${examId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

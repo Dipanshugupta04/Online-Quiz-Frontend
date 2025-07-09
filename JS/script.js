@@ -427,7 +427,7 @@ async function joinQuiz() {
     }
 
     try {
-      const response = await fetch('http://localhost:8081/quiz/join-room', {
+      const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/join-room', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -476,7 +476,7 @@ async function joinQuiz() {
 
               try {
                 if (quizCode) { // Only try to hit API if room code is available
-                    const response = await fetch(`http://localhost:8081/quiz/leave/${quizCode}`, {
+                    const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${quizCode}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
