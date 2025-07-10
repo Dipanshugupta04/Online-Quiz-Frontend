@@ -119,7 +119,8 @@ const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/api
   body: JSON.stringify({
     name: name || undefined,
     password: password || undefined,
-    contactNo: contactNo || undefined
+    contactNo: contactNo || undefined,
+    confirmPassword:confirmPassword ||undefined
   })
 });
 
