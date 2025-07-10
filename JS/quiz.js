@@ -33,7 +33,7 @@ console.log(authToken)
                 throw new Error("Authentication required - Please login again");
             }
 
-            const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/api/exam/by-user/${uniqueId}`, {
+            const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/api/exam/by-user/${uniqueId}`, {
                 headers: {
                     
                     'Authorization': `Bearer ${authToken}`,
@@ -180,7 +180,7 @@ console.log(authToken)
         
         async function deleteExam(examId) {
             try {
-                const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/api/exam/delete-by-room/${examId}`, {
+                const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/api/exam/delete-by-room/${examId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,

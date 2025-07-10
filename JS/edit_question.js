@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 // Fetch quiz from server
 async function fetchQuizData(roomId, authToken) {
-    const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/api/quizzes/preview/${roomId}`, {
+    const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/api/quizzes/preview/${roomId}`, {
         headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -264,7 +264,7 @@ async function updateQuiz(roomId) {
     if (!isValid) return;
 
     try {
-        const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/update-by-question/${roomId}`, {
+        const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/update-by-question/${roomId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${authToken}`,

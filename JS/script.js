@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //JWT TOKWN EXPIRY CHECK
 
-import { decodeJwt } from "https://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
+import { decodeJwt } from "http://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
 // const Token=localStorage.getItem('authToken');
 
 const checkInterval = 5 * 60 * 1000; // Check every 5 minutes
@@ -427,7 +427,7 @@ async function joinQuiz() {
     }
 
     try {
-      const response = await fetch('https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/join-room', {
+      const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/join-room', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -476,7 +476,7 @@ async function joinQuiz() {
 
               try {
                 if (quizCode) { // Only try to hit API if room code is available
-                    const response = await fetch(`https://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${quizCode}`, {
+                    const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${quizCode}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
