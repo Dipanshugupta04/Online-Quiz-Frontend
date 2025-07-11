@@ -324,6 +324,7 @@ if (document.getElementById("loginForm")) {
         password: this.elements.password.value,
         remember: this.elements.remember.checked,
       };
+      console.log(formData);
 
       try {
         // Make API call to login endpoint
