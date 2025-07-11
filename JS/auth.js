@@ -254,7 +254,7 @@ if (document.getElementById("signupForm")) {
 
       try {
         // Make API call to register endpoint
-        const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com /api/register", {
+        const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
