@@ -110,38 +110,56 @@ return;
 }
 
 try {
-const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/api/edit-profile', {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    name: name || undefined,
-    password: password || undefined,
-    contactNo: contactNo || undefined,
-    confirmPassword:confirmPassword ||undefined
-  })
-});
+  const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/api/edit-profile', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      name: name || null,  // Better to use null than undefined for JSON
+      password: password || null,
+      contactNo: contactNo || null,
+      confirmPassword: confirmPassword || null
+    })
+  });
 
-const result = await response.json();
+  // First check if response is successful
+  if (!response.ok) {
+    // Try to get error message whether it's JSON or text
+    const errorText = await response.text();
+    try {
+      const errorJson = JSON.parse(errorText);
+      throw new Error(errorJson.message || 'Failed to update profile');
+    } catch {
+      throw new Error(errorText || 'Failed to update profile');
+    }
+  }
 
-if (response.ok) {
-  alert('Profile updated successfully!');
+  // Try to parse as JSON, fallback to text if needed
+  let result;
+  const contentType = response.headers.get('content-type');
+  if (contentType && contentType.includes('application/json')) {
+    result = await response.json();
+  } else {
+    result = await response.text();
+  }
+
+  alert(typeof result === 'string' ? result : 'Profile updated successfully!');
+  
   // Update the displayed name if changed
   if (name) {
     document.getElementById('profileName').textContent = name;
   }
+  
   // Clear password fields
   passwordInput.value = '';
   confirmPasswordInput.value = '';
   matchStatus.innerHTML = '';
-} else {
-  throw new Error(result.message || 'Failed to update profile');
-}
+
 } catch (err) {
-console.error('Error updating profile:', err);
-alert(err.message || 'Failed to update profile. Please try again.');
+  console.error('Error updating profile:', err);
+  alert(err.message || 'Failed to update profile. Please try again.');
 }
 });
 });

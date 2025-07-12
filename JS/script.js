@@ -445,8 +445,10 @@ async function joinQuiz() {
         // sessionStorage.setItem('quizCode');
           const quizStartDate = data.startdate; // e.g., "2025-07-09"
           const quizEndDate = data.enddate; 
-          const today = new Date().toISOString().split('T')[0]; 
-          // today's date in "YYYY-MM-DD"
+         
+const dateString  = new Date();
+const today = dateString.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+          
   console.log(today);
   console.log(quizStartDate);
   console.log("End Date:", quizEndDate);
