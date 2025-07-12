@@ -273,6 +273,8 @@ if (document.getElementById("signupForm")) {
         submitBtn.style.backgroundColor = "#1dd1a1";
 
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("unique_id", data.unique_id);
+        localStorage.setItem("email",data.email);
         localStorage.setItem("user", JSON.stringify(data.user));
 
         // Redirect after delay
@@ -283,7 +285,7 @@ if (document.getElementById("signupForm")) {
         // Show error message
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
-        window.location.href='error.html';
+        // window.location.href='error.html';
 
         // Display error to user
         const errorElement = document.createElement("div");
