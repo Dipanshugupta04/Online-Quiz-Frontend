@@ -110,6 +110,7 @@ console.log(authToken)
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
               const roomCode = e.currentTarget.getAttribute('data-room-code');
+              console.log(roomCode)
           
               // Check if roomCode exists
               if (!roomCode) {
