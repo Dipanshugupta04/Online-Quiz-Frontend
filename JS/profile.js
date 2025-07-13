@@ -166,8 +166,9 @@ try {
 // Upload profile picture
 
 async function uploadProfilePicture(file) {
-  const formData = new FormData();
-  formData.append("file", file);
+  const formData =new FormData();
+  formData.append("files",file);
+  
 
   const token = localStorage.getItem("authToken");
 
@@ -176,10 +177,11 @@ async function uploadProfilePicture(file) {
       "http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/upload-profile-picture",
       {
         method: "POST",
+       
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization:`Bearer ${token}`,
         },
-        body: formData,
+        body:formData
       }
     );
 

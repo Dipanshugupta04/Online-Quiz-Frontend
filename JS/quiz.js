@@ -107,62 +107,128 @@ console.log(authToken)
 
 // COPY LINK OR ROOM CODE
 
-        document.querySelectorAll('.copy-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              const roomCode = e.currentTarget.getAttribute('data-room-code');
-              console.log(roomCode)
-          
-              // Check if roomCode exists
-              if (!roomCode) {
-                showToast("No room code found to copy.", "error");
-                return;
-              }
-          
-              navigator.clipboard.writeText(roomCode)
-                .then(() => {
-                  showToast("Room ID copied to clipboard!", "success"); // More specific message
-                })
-                .catch(err => {
-                    window.location.href='error.html';
-                  console.error('Failed to copy Room ID:', err); // Log the full error
-                  showToast("Failed to copy Room ID. Please try again.", "error"); // Use your consistent toast
-                });
-            });
-          });
-          
-          // --- Show Toast Notification (Improved) ---
-          function showToast(message, type) {
-            const toast = document.createElement("div");
-            toast.classList.add("toast", type);
-          
-            // Determine icon based on type
-            let iconClass = "fas fa-info-circle"; // Default for 'info' or general
-            if (type === "success") {
-              iconClass = "fas fa-check-circle";
-            } else if (type === "error") {
-              iconClass = "fas fa-times-circle"; // Or fa-exclamation-circle for errors
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const button = e.currentTarget;
+        const roomCode = button.getAttribute('data-room-code');
+        console.log(roomCode);
+        if (!roomCode || roomCode === "N/A") {
+            showToast("No room code found to copy.", "error");
+            return;
+        }
+
+        // Visual feedback
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        button.disabled = true;
+
+        try {
+            // Check if we're in a secure context or localhost
+            if (isSecureContext() || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'|| window.location.hostname === 'http://quizwiz-frontend.s3-website.ap-south-1.amazonaws.com') {
+                
+                    // Fallback for browsers without Clipboard API support
+                    fallbackCopyText(roomCode);
+                
+            } else {
+                // For non-secure contexts (HTTP)
+                fallbackCopyText(roomCode);
             }
-            // Add more types/icons if needed, e.g., 'warning'
-          
-            toast.innerHTML = `<i class="${iconClass}"></i> ${message}`;
-            document.body.appendChild(toast);
-          
-            // Show the toast (add 'show' class after a brief delay for CSS transition)
+        } catch (err) {
+            console.error('Copy failed:', err);
+            showToast("Failed to copy. Please try again or copy manually.", "error");
+        } finally {
+            // Restore button state
             setTimeout(() => {
-              toast.classList.add("show");
-            }, 100); // Give browser a moment to render before adding 'show'
-          
-            // Hide and remove the toast after a longer duration
-            setTimeout(() => {
-              toast.classList.remove("show");
-              // Remove the toast from the DOM after the CSS transition finishes
-              toast.addEventListener("transitionend", () => toast.remove(), {
-                once: true
-              }); // Use { once: true } to remove the listener after it fires
-            }, 3000); // **FIXED: Increased duration to 3 seconds (3000ms)**
-          }
-          
-       
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }, 2000);
+        }
+    });
+});
+
+// Fallback copy method for non-secure contexts
+function fallbackCopyText(text) {
+    try {
+        // Method 1: Create temporary textarea
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        if (successful) {
+            showToast("Room ID copied to clipboard!", "success");
+            return true;
+        }
+        
+        // Method 2: Select text and prompt user
+        const range = document.createRange();
+        const selection = window.getSelection();
+        const tempElement = document.createElement('div');
+        tempElement.textContent = text;
+        tempElement.style.position = 'fixed';
+        tempElement.style.top = '-9999px';
+        document.body.appendChild(tempElement);
+        
+        range.selectNodeContents(tempElement);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        showToast("Please use Ctrl+C to copy the Room ID", "info");
+        return false;
+    } catch (err) {
+        console.error('Fallback copy failed:', err);
+        return false;
+    }
+}
+
+// Check if context is secure
+function isSecureContext() {
+    return window.isSecureContext || 
+           window.location.protocol === 'https:' || 
+           window.location.hostname === 'localhost' || 
+           window.location.hostname === '127.0.0.1'||
+           window.location.hostname === 'http'||
+           window.location.hostname === 'http://quizwiz-frontend.s3-website.ap-south-1.amazonaws.com';
+
+
+}
+function showToast(message, type) {
+    const toast = document.createElement("div");
+    toast.classList.add("toast", type);
+  
+    // Determine icon based on type
+    let iconClass = "fas fa-info-circle"; // Default for 'info' or general
+    if (type === "success") {
+      iconClass = "fas fa-check-circle";
+    } else if (type === "error") {
+      iconClass = "fas fa-times-circle"; // Or fa-exclamation-circle for errors
+    }
+    // Add more types/icons if needed, e.g., 'warning'
+  
+    toast.innerHTML = `<i class="${iconClass}"></i> ${message}`;
+    document.body.appendChild(toast);
+  
+    // Show the toast (add 'show' class after a brief delay for CSS transition)
+    setTimeout(() => {
+      toast.classList.add("show");
+    }, 100); // Give browser a moment to render before adding 'show'
+  
+    // Hide and remove the toast after a longer duration
+    setTimeout(() => {
+      toast.classList.remove("show");
+      // Remove the toast from the DOM after the CSS transition finishes
+      toast.addEventListener("transitionend", () => toast.remove(), {
+        once: true
+      }); // Use { once: true } to remove the listener after it fires
+    }, 3000); // **FIXED: Increased duration to 3 seconds (3000ms)**
+  }
+  
 
         //   Delete the room
         document.querySelectorAll('.delete-btn').forEach(btn => {
