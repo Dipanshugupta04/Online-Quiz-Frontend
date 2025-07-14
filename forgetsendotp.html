@@ -478,13 +478,15 @@
         // Disable resend link temporarily
         resendContainer.classList.add('disabled');
         otpInput.textContent="";
+        const email=displayEmail.value;
         
         try {
           const email = emailInput.value;
           const res = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/resend", {
             method: "POST",
+            
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email })
+            body: JSON.stringify( {email} )
           });
           
 
