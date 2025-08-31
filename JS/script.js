@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //JWT TOKWN EXPIRY CHECK
 
-import { decodeJwt } from "http://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
+import { decodeJwt } from "https://cdn.jsdelivr.net/npm/jose@4.14.4/+esm";
 // const Token=localStorage.getItem('authToken');
 
 const checkInterval = 5 * 60 * 1000; // Check every 5 minutes
