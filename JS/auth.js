@@ -256,6 +256,8 @@ if (document.getElementById("signupForm")) {
         // Make API call to register endpoint
         const response = await fetch("https://quizwiz-bcn5.onrender.com/api/register", {
           method: "POST",
+          mode:"cors",
+
           headers: {
             "Content-Type": "application/json",
           },
