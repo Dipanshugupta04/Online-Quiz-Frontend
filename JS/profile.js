@@ -110,7 +110,7 @@ return;
 }
 
 try {
-  const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/api/edit-profile', {
+  const response = await fetch('https://quizwiz-bcn5.onrender.com/api/edit-profile', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ async function uploadProfilePicture(file) {
 
   try {
     const response = await fetch(
-      "http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/upload-profile-picture",
+      "https://quizwiz-bcn5.onrender.com/profile/upload-profile-picture",
       {
         method: "POST",
        
@@ -204,7 +204,7 @@ async function refreshProfilePicture() {
 
   try {
     const response = await fetch(
-      "http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/profile-picture",
+      "https://quizwiz-bcn5.onrender.com/profile/profile-picture",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -260,7 +260,7 @@ async function refreshProfileDetails() {
     const token = localStorage.getItem("authToken");
 
     try {
-      const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/user", {
+      const response = await fetch("https://quizwiz-bcn5.onrender.com/api/user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -303,7 +303,7 @@ const avg = document.getElementById("avgScore");
 const progressTab = document.querySelector("#progress-tab");
 
 try {
-const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/achievements", {
+const response = await fetch("https://quizwiz-bcn5.onrender.com/profile/user/achievements", {
 headers: {
 Authorization: `Bearer ${token}`
 }
@@ -401,7 +401,7 @@ const quiztaken = document.getElementById("quizzesTaken");
 const streakElement = document.getElementById("currentStreak");
 
 try {
-const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/history", {
+const response = await fetch("https://quizwiz-bcn5.onrender.com/profile/user/history", {
 headers: {
 Authorization: `Bearer ${token}`
 }

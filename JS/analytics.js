@@ -268,7 +268,7 @@ async function refreshUserHistory() {
   const historyContainer = document.querySelector(".quiz-history");
 
   try {
-    const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/history", {
+    const response = await fetch("https://quizwiz-bcn5.onrender.com/profile/user/history", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -333,7 +333,7 @@ async function refreshUserAchievements() {
     const recentContainer = document.querySelector(".recent-activity");
 
     try {
-      const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/profile/user/achievements", {
+      const response = await fetch("https://quizwiz-bcn5.onrender.com/profile/user/achievements", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

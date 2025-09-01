@@ -412,7 +412,7 @@
 
         // WebSocket connection
         function connect(roomCode) {
-            const socket = new SockJS('http://quizwiz.ap-south-1.elasticbeanstalk.com/ws');
+            const socket = new SockJS('https://quizwiz-bcn5.onrender.com/ws');
             stompClient = Stomp.over(socket);
 
             stompClient.connect({}, function (frame) {
@@ -675,7 +675,7 @@
                     }))
                 };
 
-                const response = await fetch('http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/submit', {
+                const response = await fetch('https://quizwiz-bcn5.onrender.com/quiz/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -798,7 +798,7 @@
 
                 
                     if (roomCode) { // Only try to hit API if email is available
-                        const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/leave/${roomCode}`, {
+                        const response = await fetch(`https://quizwiz-bcn5.onrender.com/quiz/leave/${roomCode}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -847,7 +847,7 @@
 
   async function fetchParticipantCount() {
     try {
-      const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/quiz/participants/count/${roomCode}`, {
+      const response = await fetch(`https://quizwiz-bcn5.onrender.com/quiz/participants/count/${roomCode}`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }

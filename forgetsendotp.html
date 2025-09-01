@@ -386,7 +386,7 @@
         const email = emailInput.value;
         
         try {
-          const res = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/send", {
+          const res = await fetch("https://quizwiz-bcn5.onrender.com/api/send", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify( email )
@@ -438,7 +438,7 @@
         const email = emailInput.value;
         
         try {
-    const res = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/verify", {
+    const res = await fetch("https://quizwiz-bcn5.onrender.com/api/verify", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -482,7 +482,7 @@
         
         try {
           const email = emailInput.value;
-          const res = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/resend", {
+          const res = await fetch("https://quizwiz-bcn5.onrender.com/api/resend", {
             method: "POST",
             
             headers: { "Content-Type": "application/json" },

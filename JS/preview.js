@@ -51,7 +51,7 @@ async function init() {
 
 // Fetch quiz data from API
 async function fetchQuizData(roomId) {
-    const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/api/quizzes/preview/${roomId}`, {
+    const response = await fetch(`https://quizwiz-bcn5.onrender.com/api/quizzes/preview/${roomId}`, {
         headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -121,7 +121,7 @@ function setupEventListeners() {
     publishBtn.addEventListener('click', async function() {
         if (confirm('Are you sure you want to delete this quiz? This action cannot be undone.')) {
             try {
-                const response = await fetch(`http://quizwiz.ap-south-1.elasticbeanstalk.com/api/quizzes/${roomId}`, {
+                const response = await fetch(`https://quizwiz-bcn5.onrender.com/api/quizzes/${roomId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${authToken}`,

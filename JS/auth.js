@@ -254,7 +254,7 @@ if (document.getElementById("signupForm")) {
 
       try {
         // Make API call to register endpoint
-        const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/register", {
+        const response = await fetch("https://quizwiz-bcn5.onrender.com/api/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -330,7 +330,7 @@ if (document.getElementById("loginForm")) {
 
       try {
         // Make API call to login endpoint
-        const response = await fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/api/login", {
+        const response = await fetch("https://quizwiz-bcn5.onrender.com/api/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -402,7 +402,7 @@ function handleCredentialResponse(response) {
   const idToken = response.credential;
   console.log("Google ID Token:", idToken);
 
-  fetch("http://quizwiz.ap-south-1.elasticbeanstalk.com/auth/google", {
+  fetch("https://quizwiz-bcn5.onrender.com/auth/google", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
