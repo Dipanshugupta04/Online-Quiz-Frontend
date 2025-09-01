@@ -265,7 +265,7 @@ if (document.getElementById("signupForm")) {
         });
 
         const data = await response.json();
-        console.log("data is -"+data);
+        console.log("data is -",data);
 
         if (!response.ok) {
           throw new Error(data.message || "Registration failed");
