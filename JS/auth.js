@@ -276,7 +276,7 @@ if (document.getElementById("signupForm")) {
         submitBtn.style.backgroundColor = "#1dd1a1";
 
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("unique_id", data,user.uniqueId);
+        localStorage.setItem("unique_id", data.user.uniqueId);
         localStorage.setItem("email",data.email);
         localStorage.setItem("user", JSON.stringify(data.user));
 
