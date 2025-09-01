@@ -281,9 +281,9 @@ if (document.getElementById("signupForm")) {
         localStorage.setItem("user", JSON.stringify(data.user));
 
         // Redirect after delay
-        // setTimeout(() => {
-        //   window.location.href = "index.html";
-        // }, 1500);
+        setTimeout(() => {
+          // window.location.href = "index.html";
+        }, 1500);
       } catch (error) {
         // Show error message
         submitBtn.innerHTML = originalText;
