@@ -265,7 +265,7 @@ if (document.getElementById("signupForm")) {
         });
 
         const data = await response.json();
-        console.log(data);
+        console.log("data is -"+data);
 
         if (!response.ok) {
           throw new Error(data.message || "Registration failed");
@@ -276,7 +276,7 @@ if (document.getElementById("signupForm")) {
         submitBtn.style.backgroundColor = "#1dd1a1";
 
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("unique_id", data.unique_id);
+        localStorage.setItem("unique_id", data,user.unique_id);
         localStorage.setItem("email",data.email);
         localStorage.setItem("user", JSON.stringify(data.user));
 
